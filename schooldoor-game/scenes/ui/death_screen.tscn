@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b1embmppn5ak3"]
 
-[ext_resource type="FontFile" path="res://fonts/Digital_Thin.ttf" id="1_uyutr"]
+[ext_resource type="FontFile" uid="uid://cqy7r0bgc4rbt" path="res://fonts/Digital_Thin.ttf" id="1_j0ehl"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v5gy4"]
 bg_color = Color(0.10980392, 0.12156863, 0.2, 0.7921569)
@@ -53,7 +53,7 @@ offset_bottom = 52.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.827451, 0.24313726, 0.25882354, 1)
-theme_override_fonts/font = ExtResource("1_uyutr")
+theme_override_fonts/font = ExtResource("1_j0ehl")
 theme_override_font_sizes/font_size = 67
 text = "YOU CANT KILL THE GOD"
 
@@ -72,7 +72,7 @@ grow_horizontal = 2
 grow_vertical = 0
 size_flags_vertical = 8
 theme_override_colors/font_color = Color(1, 0.87058824, 0.39607844, 1)
-theme_override_fonts/font = ExtResource("1_uyutr")
+theme_override_fonts/font = ExtResource("1_j0ehl")
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_dwo6e")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_mqh5l")
