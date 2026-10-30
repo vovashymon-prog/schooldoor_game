@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://doxgtb8uxlk6q"]
+
+[ext_resource type="Script" uid="uid://k0gsi537dxmd" path="res://enemy_spinning.gd" id="1_oyq44"]
+[ext_resource type="Texture2D" uid="uid://cw7q5hw1sxkgg" path="res://sprites/Temp_Player.png" id="2_a65fb"]
+[ext_resource type="Resource" uid="uid://csex305co04qa" path="res://assets/Temp_Sword.tres" id="2_aobe2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1wlia"]
+size = Vector2(12, 12)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ddhyt"]
+size = Vector2(16, 8)
+
+[node name="EnemySpinning" type="CharacterBody2D" unique_id=972149547 groups=["enemies"]]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_oyq44")
+sword_item = ExtResource("2_aobe2")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2106482395]
+self_modulate = Color(0, 0.5716512, 0.9403632, 1)
+texture = ExtResource("2_a65fb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1471116602]
+shape = SubResource("RectangleShape2D_1wlia")
+
+[node name="sword" type="Area2D" parent="." unique_id=226408916 groups=["e_weapons"]]
+collision_layer = 8
+collision_mask = 3
+
+[node name="sword_sprite" type="Sprite2D" parent="sword" unique_id=1045923936]
+position = Vector2(18, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="sword" unique_id=527752254]
+position = Vector2(18, 0)
+shape = SubResource("RectangleShape2D_ddhyt")
+
+[connection signal="area_entered" from="sword" to="." method="_on_sword_area_entered"]

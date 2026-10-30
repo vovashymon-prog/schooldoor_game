@@ -1,12 +1,8 @@
 [gd_scene format=3 uid="uid://cqxbvrn68qcif"]
 
 [ext_resource type="Texture2D" uid="uid://c32sxk641n617" path="res://sprites/Temp_Tileset.png" id="1_rvslj"]
-[ext_resource type="Texture2D" uid="uid://cw7q5hw1sxkgg" path="res://sprites/Temp_Player.png" id="2_0bbpv"]
-[ext_resource type="Script" uid="uid://cii8qr27bvlqc" path="res://scripts/Player.gd" id="2_rarhs"]
-[ext_resource type="Resource" uid="uid://csex305co04qa" path="res://assets/Temp_Sword.tres" id="3_rarhs"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_1wlia"]
-size = Vector2(12, 12)
+[ext_resource type="PackedScene" uid="uid://ckggwh6ev2v3y" path="res://scenes/player.tscn" id="2_rvslj"]
+[ext_resource type="PackedScene" uid="uid://doxgtb8uxlk6q" path="res://scenes/enemy_spinning.tscn" id="3_0bbpv"]
 
 [node name="Main" type="Node2D" unique_id=131962426]
 
@@ -14,22 +10,7 @@ size = Vector2(12, 12)
 scale = Vector2(10, 10)
 texture = ExtResource("1_rvslj")
 
-[node name="Player" type="CharacterBody2D" parent="." unique_id=1729122022]
-script = ExtResource("2_rarhs")
-sword_item = ExtResource("3_rarhs")
+[node name="Player" parent="." unique_id=972149547 instance=ExtResource("2_rvslj")]
 
-[node name="Camera2D" type="Camera2D" parent="Player" unique_id=871271100]
-zoom = Vector2(3, 3)
-position_smoothing_enabled = true
-position_smoothing_speed = 10.0
-
-[node name="Sprite2D" type="Sprite2D" parent="Player" unique_id=1149977558]
-texture = ExtResource("2_0bbpv")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=968557455]
-shape = SubResource("RectangleShape2D_1wlia")
-
-[node name="sword" type="Node2D" parent="Player" unique_id=297526721]
-
-[node name="sword_sprite" type="Sprite2D" parent="Player/sword" unique_id=1645745218]
-position = Vector2(18, 0)
+[node name="EnemySpinning" parent="." unique_id=1780858419 instance=ExtResource("3_0bbpv")]
+position = Vector2(71, -61)
