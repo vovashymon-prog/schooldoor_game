@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://ckggwh6ev2v3y" path="res://scenes/player.tscn" id="2_rvslj"]
 [ext_resource type="PackedScene" uid="uid://doxgtb8uxlk6q" path="res://scenes/enemy_spinning.tscn" id="3_0bbpv"]
 [ext_resource type="PackedScene" uid="uid://c8i2qxyhnfpl2" path="res://scenes/heal_potion.tscn" id="4_rarhs"]
+[ext_resource type="PackedScene" uid="uid://73cvu0q3oj8" path="res://scenes/enemy_directed.tscn" id="5_vcsgt"]
 
 [node name="Main" type="Node2D" unique_id=131962426]
 
@@ -13,8 +14,11 @@ texture = ExtResource("1_rvslj")
 
 [node name="Player" parent="." unique_id=972149547 instance=ExtResource("2_rvslj")]
 
-[node name="EnemySpinning" parent="." unique_id=1780858419 instance=ExtResource("3_0bbpv")]
-position = Vector2(71, -61)
-
 [node name="HealPotion" parent="." unique_id=98250702 instance=ExtResource("4_rarhs")]
 position = Vector2(-103, 73)
+
+[node name="EnemyDirected" parent="." unique_id=1568689281 instance=ExtResource("5_vcsgt")]
+position = Vector2(81, 129)
+
+[node name="EnemySpinning" parent="." unique_id=767441786 instance=ExtResource("3_0bbpv")]
+position = Vector2(102, -102)

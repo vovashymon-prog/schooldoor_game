@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Item" format=3 uid="uid://ryn01hxtwc67"]
+
+[ext_resource type="Script" uid="uid://rtfomaj3ijyt" path="res://scripts/Item.gd" id="1_ssq55"]
+[ext_resource type="Texture2D" uid="uid://bv8g03adb0o1w" path="res://sprites/sword1.png" id="2_ssq55"]
+
+[resource]
+script = ExtResource("1_ssq55")
+power = 25
+speed = 2.0
+texture = ExtResource("2_ssq55")
+metadata/_custom_type_script = "uid://rtfomaj3ijyt"

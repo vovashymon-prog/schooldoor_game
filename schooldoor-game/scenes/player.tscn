@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" uid="uid://cii8qr27bvlqc" path="res://scripts/Player.gd" id="1_qhqgy"]
 [ext_resource type="Resource" uid="uid://csex305co04qa" path="res://assets/Temp_Sword.tres" id="2_dqkch"]
-[ext_resource type="Texture2D" uid="uid://cw7q5hw1sxkgg" path="res://sprites/Temp_Player.png" id="3_qlg0r"]
+[ext_resource type="Texture2D" uid="uid://j01egnrq2abm" path="res://sprites/Player/Player_Front.png" id="3_qhqgy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1wlia"]
-size = Vector2(12, 12)
+size = Vector2(12, 18)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qhqgy"]
 size = Vector2(16, 8)
@@ -45,7 +45,12 @@ position_smoothing_enabled = true
 position_smoothing_speed = 10.0
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2106482395]
-texture = ExtResource("3_qlg0r")
+texture = ExtResource("3_qhqgy")
+
+[node name="orbit" type="Node2D" parent="." unique_id=207759831 groups=["pOrbit"]]
+
+[node name="bobber" type="Node2D" parent="orbit" unique_id=136708257]
+position = Vector2(45, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1471116602]
 shape = SubResource("RectangleShape2D_1wlia")
@@ -55,10 +60,10 @@ collision_layer = 2
 collision_mask = 12
 
 [node name="sword_sprite" type="Sprite2D" parent="sword" unique_id=954582580]
-position = Vector2(18, 0)
+position = Vector2(20, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="sword" unique_id=1160257002]
-position = Vector2(18, 0)
+position = Vector2(20, 0)
 shape = SubResource("RectangleShape2D_qhqgy")
 
 [node name="Audio_Steps" type="AudioStreamPlayer2D" parent="." unique_id=1030331497]

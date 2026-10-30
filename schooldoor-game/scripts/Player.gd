@@ -93,7 +93,7 @@ func _process(delta):
 
 func _on_sword_area_entered(area: Area2D) -> void:
 	if area.is_in_group("e_weapons"):
-		var enemy = area.get_parent()
+		var enemy = area.get_parent().get_parent()
 		enemy.inverted_spinning = not enemy.inverted_spinning
 		audio_clashes.stream = clash_sound
 		audio_clashes.play()
