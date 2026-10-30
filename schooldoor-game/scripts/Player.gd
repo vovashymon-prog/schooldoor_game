@@ -16,6 +16,8 @@ var clash_sound = preload("res://audio/Sword/ThoSwordsHit_1.wav")
 var hit_sound = preload("res://audio/Sword/Regular hit.wav")
 var critical_sound = preload("res://audio/Sword/Critical hit.wav")
 
+var pause_scene = preload("res://scenes/ui/pause_menu.tscn")
+
 var input: Vector2
 
 func _ready():
@@ -38,6 +40,9 @@ func take_damage_anim():
 	tween.tween_property(player_sprite, "modulate", Color("ffffffff"), 0.16)
 	tween.play()
 
+func die():
+	get_tree().change_scene_to_file("res://scenes/ui/death_screen.tscn")
+
 func take_damage(amount):
 	if !is_invul:
 		hp -= amount
@@ -50,20 +55,33 @@ func take_damage(amount):
 			update_hp_bar()
 			audio_hits.stream = critical_sound
 			audio_hits.play()
-			queue_free()
+			die()
 		else:
 			audio_hits.stream = critical_sound
 			audio_hits.play()
-		await get_tree().create_timer(0.33).timeout
 
 func get_input():
 	input.y = Input.get_action_strength("down") - Input.get_action_strength("up")
 	input.x = Input.get_action_strength("right") - Input.get_action_strength("left")
 	return input.normalized();
 
+func resume():
+	get_tree().paused = false
+
+func pause():
+	get_tree().paused = true
+	var pause_menu = pause_scene.instantiate()
+	pause_menu.scale = Vector2(0.33, 0.33)
+	add_child(pause_menu)
+
 func _process(delta):
-	# WALKING
 	var player_input = get_input()
+	
+	if Input.is_action_just_pressed("pause") && get_tree().paused:
+		resume()
+	elif Input.is_action_just_pressed("pause"):
+		pause()
+	# WALKING
 	velocity = lerp(velocity, player_input * speed, accelration * delta)
 	move_and_slide()
 	

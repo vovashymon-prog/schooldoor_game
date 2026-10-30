@@ -47,7 +47,6 @@ func take_damage(amount):
 			if player != null: 
 				player.audio_hits.stream = critical_sound
 				player.audio_hits.play()
-		await get_tree().create_timer(0.33).timeout
 
 func _ready():
 	if sword_item: sword.get_child(0).texture = sword_item.texture

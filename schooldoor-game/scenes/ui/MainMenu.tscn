@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://daomxmtb7mu2f"]
 
-[ext_resource type="FontFile" path="res://fonts/Digital_Thin.ttf" id="1_yqorp"]
+[ext_resource type="Script" uid="uid://c4k83tkaom1cb" path="res://scripts/pause_menu.gd" id="1_6jbdy"]
+[ext_resource type="FontFile" uid="uid://cqy7r0bgc4rbt" path="res://fonts/Digital_Thin.ttf" id="1_yqorp"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0ykhv"]
 bg_color = Color(0.101960786, 0.12156863, 0.2, 1)
@@ -26,6 +27,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_6jbdy")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1001927685]
 layout_mode = 1
@@ -98,3 +100,6 @@ theme_override_constants/shadow_offset_x = 2
 theme_override_fonts/font = ExtResource("1_yqorp")
 theme_override_font_sizes/font_size = 56
 text = "GAME NAME"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/ButtonPlay" to="." method="_on_inMenu_play_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/ButtonQuit" to="." method="_on_quit_pressed"]

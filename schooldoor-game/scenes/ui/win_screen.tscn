@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://esp7q8divud2"]
 
-[ext_resource type="FontFile" path="res://fonts/Digital_Thin.ttf" id="1_1cgod"]
+[ext_resource type="FontFile" uid="uid://cqy7r0bgc4rbt" path="res://fonts/Digital_Thin.ttf" id="1_1cgod"]
+[ext_resource type="Script" uid="uid://c4k83tkaom1cb" path="res://scripts/pause_menu.gd" id="1_uqtu8"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v5gy4"]
 bg_color = Color(0.10980392, 0.12156863, 0.2, 0.7921569)
@@ -29,6 +30,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_uqtu8")
 
 [node name="Panel" type="Panel" parent="." unique_id=2021630213]
 layout_mode = 1
@@ -55,7 +57,7 @@ grow_vertical = 2
 theme_override_colors/font_color = Color(0.4, 0.3882353, 0.4392157, 1)
 theme_override_fonts/font = ExtResource("1_1cgod")
 theme_override_font_sizes/font_size = 67
-text = "THE DEVIL FORGOTTEN"
+text = "THE DEVIL WAS FORGOTTEN"
 
 [node name="ButtonMainMenu" type="Button" parent="Panel" unique_id=429621406]
 custom_minimum_size = Vector2(320, 80)
@@ -78,3 +80,5 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_dwo6e")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_mqh5l")
 theme_override_styles/hover = SubResource("StyleBoxFlat_7ns25")
 text = "Main Menu"
+
+[connection signal="pressed" from="Panel/ButtonMainMenu" to="." method="_on_main_menu_pressed"]
