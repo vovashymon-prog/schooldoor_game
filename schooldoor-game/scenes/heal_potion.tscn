@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://c8i2qxyhnfpl2"]
+
+[ext_resource type="Texture2D" uid="uid://c1fclumskbeai" path="res://sprites/potion red.png" id="1_k2dl5"]
+[ext_resource type="Script" uid="uid://cfu6ntjjflcwo" path="res://scripts/heal_potion.gd" id="1_p1y2b"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1wlia"]
+size = Vector2(16, 16)
+
+[node name="HealPotion" type="Area2D" unique_id=98250702 groups=["heal_potion"]]
+collision_layer = 16
+script = ExtResource("1_p1y2b")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=899528418]
+texture = ExtResource("1_k2dl5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1350101943]
+shape = SubResource("RectangleShape2D_1wlia")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

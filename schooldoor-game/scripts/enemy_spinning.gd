@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@export var speed = 100
+@export var speed = 0.5
 @export var accelration = 20.0
 @export var max_hp := 100
 var hp := 100
@@ -53,6 +53,10 @@ func _ready():
 
 func _process(delta):
 	# WALKING
+	var direction = player.global_position - global_position
+	if direction.length() > 30:
+		velocity = lerp(velocity, direction * speed, accelration * delta)
+		move_and_slide()
 	
 	# SWORD
 	#var direction = global_position.direction_to(get_global_mouse_position())
