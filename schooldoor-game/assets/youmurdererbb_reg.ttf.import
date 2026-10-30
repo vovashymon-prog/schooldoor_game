@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://crq4q3iq6hmsp"
-path="res://.godot/imported/youmurdererbb_reg.ttf-55e99f540cacfbb8ef5bced5804b68ae.fontdata"
+path="res://.godot/imported/youmurdererbb_reg.ttf-0c836237bc88ff58140d32cadbf5156c.fontdata"
 
 [deps]
 
-source_file="res://sprites/youmurdererbb_reg.ttf"
-dest_files=["res://.godot/imported/youmurdererbb_reg.ttf-55e99f540cacfbb8ef5bced5804b68ae.fontdata"]
+source_file="res://assets/youmurdererbb_reg.ttf"
+dest_files=["res://.godot/imported/youmurdererbb_reg.ttf-0c836237bc88ff58140d32cadbf5156c.fontdata"]
 
 [params]
 

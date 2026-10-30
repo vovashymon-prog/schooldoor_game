@@ -8,6 +8,7 @@ var inverted_spinning := false
 var is_invul := false
 
 @export var sword_item: Item
+@onready var sprite = $Sprite2D
 @onready var sword = $sword
 @onready var audio = $Audio
 @onready var player = get_tree().get_first_node_in_group("player")
@@ -22,9 +23,18 @@ func process_invul():
 	await get_tree().create_timer(0.33).timeout
 	is_invul = false
 
+func take_damage_anim():
+	var tween = get_tree().create_tween()
+	tween.tween_property(sprite, "modulate", Color(7.759, 7.759, 7.759, 1.0), 0.16)
+	tween.play()
+	await tween.finished; tween.kill(); tween = create_tween()
+	tween.tween_property(sprite, "modulate", Color("ffffffff"), 0.16)
+	tween.play()
+
 func take_damage(amount):
 	if !is_invul:
 		hp -= amount
+		take_damage_anim()
 		print(hp)
 		process_invul()
 		if hp <= 0:
@@ -37,9 +47,7 @@ func take_damage(amount):
 			if player != null: 
 				player.audio_hits.stream = critical_sound
 				player.audio_hits.play()
-		modulate = Color(7.759, 7.759, 7.759, 1.0)
 		await get_tree().create_timer(0.33).timeout
-		modulate = Color(1.0, 1.0, 1.0)
 
 func _ready():
 	if sword_item: sword.get_child(0).texture = sword_item.texture

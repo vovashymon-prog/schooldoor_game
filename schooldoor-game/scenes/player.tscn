@@ -80,6 +80,7 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_dqkch")
 step = 1.0
 value = 50.0
 rounded = true
+show_percentage = false
 
 [connection signal="area_entered" from="sword" to="." method="_on_sword_area_entered"]
 [connection signal="body_entered" from="sword" to="." method="_on_sword_body_entered"]

@@ -8,6 +8,7 @@ var is_invul := false
 
 @export var sword_item: Item
 @onready var sword = $sword
+@onready var player_sprite = $Sprite2D
 @onready var audio_steps = $Audio_Steps
 @onready var audio_hits = $Audio_Hits
 @onready var audio_clashes = $Audio_Clashes
@@ -29,10 +30,19 @@ func process_invul():
 func update_hp_bar():
 	$HPBar.value = hp
 
+func take_damage_anim():
+	var tween = get_tree().create_tween()
+	tween.tween_property(player_sprite, "modulate", Color(7.759, 7.759, 7.759, 1.0), 0.16)
+	tween.play()
+	await tween.finished; tween.kill(); tween = create_tween()
+	tween.tween_property(player_sprite, "modulate", Color("ffffffff"), 0.16)
+	tween.play()
+
 func take_damage(amount):
 	if !is_invul:
 		hp -= amount
 		update_hp_bar()
+		take_damage_anim()
 		print(hp)
 		process_invul()
 		if hp <= 0:
@@ -44,9 +54,7 @@ func take_damage(amount):
 		else:
 			audio_hits.stream = critical_sound
 			audio_hits.play()
-		modulate = Color(7.759, 7.759, 7.759, 1.0)
 		await get_tree().create_timer(0.33).timeout
-		modulate = Color(1.0, 1.0, 1.0)
 
 func get_input():
 	input.y = Input.get_action_strength("down") - Input.get_action_strength("up")
