@@ -1,0 +1,124 @@
+[gd_scene format=3 uid="uid://cgj278yhg4ag2"]
+
+[ext_resource type="FontFile" path="res://fonts/Digital_Thin.ttf" id="1_n87rw"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8vrlf"]
+bg_color = Color(0.10980392, 0.12156863, 0.2, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+shadow_color = Color(1, 0.87058824, 0.39607844, 1)
+shadow_size = 19
+anti_aliasing = false
+anti_aliasing_size = 0.576
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_myx47"]
+bg_color = Color(0.101960786, 0.12156863, 0.2, 1)
+border_color = Color(0.827451, 0.24313726, 0.25882354, 1)
+corner_detail = 1
+shadow_color = Color(1, 0.87058824, 0.39607844, 1)
+shadow_size = 9
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kukqi"]
+bg_color = Color(0.101960786, 0.12156863, 0.34901962, 0.7921569)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5d2l8"]
+bg_color = Color(0.101960786, 0.12156863, 0.2, 1)
+border_color = Color(0.827451, 0.24313726, 0.25882354, 1)
+corner_detail = 1
+shadow_color = Color(0.827451, 0.24313726, 0.25882354, 1)
+shadow_size = 9
+
+[node name="PauseMenu" type="Control" unique_id=539249642]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="." unique_id=2122948999]
+custom_minimum_size = Vector2(220, 300)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -110.0
+offset_top = -150.0
+offset_right = 110.0
+offset_bottom = 169.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_8vrlf")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=1868687111]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.935
+anchor_right = 0.5
+anchor_bottom = 0.935
+offset_left = -160.0
+offset_top = -180.0
+offset_right = 160.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 21
+
+[node name="ButtonPlay" type="Button" parent="Panel/VBoxContainer" unique_id=1680747949]
+custom_minimum_size = Vector2(180, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(1, 0.87058824, 0.39607844, 1)
+theme_override_fonts/font = ExtResource("1_n87rw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_myx47")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_kukqi")
+theme_override_styles/hover = SubResource("StyleBoxFlat_5d2l8")
+text = "СONTINUE"
+
+[node name="ButtonMainMenu" type="Button" parent="Panel/VBoxContainer" unique_id=1065420128]
+custom_minimum_size = Vector2(180, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(1, 0.87058824, 0.39607844, 1)
+theme_override_fonts/font = ExtResource("1_n87rw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_myx47")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_kukqi")
+theme_override_styles/hover = SubResource("StyleBoxFlat_5d2l8")
+text = "Main"
+
+[node name="ButtonQuit2" type="Button" parent="Panel/VBoxContainer" unique_id=37326207]
+custom_minimum_size = Vector2(180, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(1, 0.87058824, 0.39607844, 1)
+theme_override_fonts/font = ExtResource("1_n87rw")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_myx47")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_kukqi")
+theme_override_styles/hover = SubResource("StyleBoxFlat_5d2l8")
+text = "QUIT"
+
+[node name="Label" type="Label" parent="Panel" unique_id=23259653]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.054
+anchor_right = 0.5
+anchor_bottom = 0.121
+offset_left = -19.999992
+offset_right = 19.999992
+offset_bottom = 23.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 0.87058824, 0.39607844, 1)
+theme_override_fonts/font = ExtResource("1_n87rw")
+theme_override_font_sizes/font_size = 37
+text = "PAUSE"

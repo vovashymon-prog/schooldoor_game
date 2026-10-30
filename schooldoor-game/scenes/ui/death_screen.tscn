@@ -1,0 +1,80 @@
+[gd_scene format=3 uid="uid://b1embmppn5ak3"]
+
+[ext_resource type="FontFile" path="res://fonts/Digital_Thin.ttf" id="1_uyutr"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v5gy4"]
+bg_color = Color(0.10980392, 0.12156863, 0.2, 0.7921569)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dwo6e"]
+bg_color = Color(0.101960786, 0.12156863, 0.2, 1)
+border_color = Color(0.827451, 0.24313726, 0.25882354, 1)
+corner_detail = 1
+shadow_color = Color(1, 0.87058824, 0.39607844, 1)
+shadow_size = 9
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mqh5l"]
+bg_color = Color(0.101960786, 0.12156863, 0.34901962, 0.7921569)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7ns25"]
+bg_color = Color(0.101960786, 0.12156863, 0.2, 1)
+border_color = Color(0.827451, 0.24313726, 0.25882354, 1)
+corner_detail = 1
+shadow_color = Color(0.827451, 0.24313726, 0.25882354, 1)
+shadow_size = 9
+
+[node name="DeathScreen" type="Control" unique_id=1683819822]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="." unique_id=2021630213]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_v5gy4")
+
+[node name="Label2" type="Label" parent="Panel" unique_id=1083070336]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.38
+anchor_right = 0.5
+anchor_bottom = 0.415
+offset_left = -270.5
+offset_top = -52.5
+offset_right = 270.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.827451, 0.24313726, 0.25882354, 1)
+theme_override_fonts/font = ExtResource("1_uyutr")
+theme_override_font_sizes/font_size = 67
+text = "YOU CANT KILL THE GOD"
+
+[node name="ButtonMainMenu" type="Button" parent="Panel" unique_id=429621406]
+custom_minimum_size = Vector2(320, 80)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.79
+anchor_right = 0.5
+anchor_bottom = 0.79
+offset_left = -160.0
+offset_top = -80.0
+offset_right = 160.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(1, 0.87058824, 0.39607844, 1)
+theme_override_fonts/font = ExtResource("1_uyutr")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_dwo6e")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_mqh5l")
+theme_override_styles/hover = SubResource("StyleBoxFlat_7ns25")
+text = "Main Menu"
