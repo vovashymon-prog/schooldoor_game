@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://cqxbvrn68qcif"]
+
+[ext_resource type="Texture2D" uid="uid://c32sxk641n617" path="res://sprites/Temp_Tileset.png" id="1_rvslj"]
+[ext_resource type="Texture2D" uid="uid://cw7q5hw1sxkgg" path="res://sprites/Temp_Player.png" id="2_0bbpv"]
+[ext_resource type="Script" uid="uid://cii8qr27bvlqc" path="res://scenes/Player.gd" id="2_rarhs"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1wlia"]
+size = Vector2(12, 12)
+
+[node name="Main" type="Node2D" unique_id=131962426]
+
+[node name="TempTileset" type="Sprite2D" parent="." unique_id=1486703037]
+scale = Vector2(10, 10)
+texture = ExtResource("1_rvslj")
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=1729122022]
+script = ExtResource("2_rarhs")
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=871271100]
+zoom = Vector2(3, 3)
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0
+
+[node name="Sprite2D" type="Sprite2D" parent="Player" unique_id=1149977558]
+texture = ExtResource("2_0bbpv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=968557455]
+shape = SubResource("RectangleShape2D_1wlia")
