@@ -10,6 +10,7 @@ var is_invul := false
 @onready var sword = $sword
 @onready var audio = $Audio
 var clash_sound = preload("res://audio/Sword/ThoSwordsHit_1.wav")
+#var critical_sound = preload()
 
 var input: Vector2
 
@@ -48,10 +49,13 @@ func _process(delta):
 
 
 func _on_sword_area_entered(area: Area2D) -> void:
-	if area.is_in_group("enemies"):
-		area.take_damage(sword_item.power)
-	elif area.is_in_group("e_weapons"):
+	if area.is_in_group("e_weapons"):
 		var enemy = area.get_parent()
 		enemy.inverted_spinning = not enemy.inverted_spinning
 		audio.stream = clash_sound
 		audio.play()
+
+
+func _on_sword_body_entered(body: Node2D) -> void:
+	if body.is_in_group("enemies"):
+		body.take_damage(sword_item.power)

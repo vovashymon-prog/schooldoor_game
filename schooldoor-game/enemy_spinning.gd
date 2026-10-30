@@ -20,9 +20,10 @@ func process_invul():
 func take_damage(amount):
 	if !is_invul:
 		hp -= amount
+		print(hp)
 		process_invul()
 		if hp <= 0:
-			pass
+			queue_free()
 		else:
 			pass
 
@@ -39,6 +40,6 @@ func _process(delta):
 	elif sword_item && inverted_spinning: sword.rotation += sword_item.speed * delta
 
 
-func _on_sword_area_entered(area: Area2D) -> void:
-	if area.is_in_group("player"):
-		area.take_damage(sword_item.power)
+func _on_sword_body_entered(body: Node2D) -> void:
+	if body.is_in_group("player"):
+		body.take_damage(sword_item.power)

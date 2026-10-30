@@ -34,4 +34,6 @@ position = Vector2(18, 0)
 position = Vector2(18, 0)
 shape = SubResource("RectangleShape2D_ddhyt")
 
-[connection signal="area_entered" from="sword" to="." method="_on_sword_area_entered"]
+[node name="Audio" type="AudioStreamPlayer2D" parent="." unique_id=1157805459]
+
+[connection signal="body_entered" from="sword" to="." method="_on_sword_body_entered"]

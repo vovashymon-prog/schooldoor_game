@@ -10,7 +10,7 @@ size = Vector2(12, 12)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qhqgy"]
 size = Vector2(16, 8)
 
-[node name="Player" type="CharacterBody2D" unique_id=972149547]
+[node name="Player" type="CharacterBody2D" unique_id=972149547 groups=["player"]]
 collision_mask = 8
 script = ExtResource("1_qhqgy")
 sword_item = ExtResource("2_dqkch")
@@ -26,7 +26,7 @@ texture = ExtResource("3_qlg0r")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1471116602]
 shape = SubResource("RectangleShape2D_1wlia")
 
-[node name="sword" type="Area2D" parent="." unique_id=1210288509 groups=["player"]]
+[node name="sword" type="Area2D" parent="." unique_id=1210288509]
 collision_layer = 2
 collision_mask = 12
 
@@ -40,3 +40,4 @@ shape = SubResource("RectangleShape2D_qhqgy")
 [node name="Audio" type="AudioStreamPlayer2D" parent="." unique_id=1030331497]
 
 [connection signal="area_entered" from="sword" to="." method="_on_sword_area_entered"]
+[connection signal="body_entered" from="sword" to="." method="_on_sword_body_entered"]
