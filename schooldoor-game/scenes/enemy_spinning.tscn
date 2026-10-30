@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://doxgtb8uxlk6q"]
 
-[ext_resource type="Script" uid="uid://k0gsi537dxmd" path="res://enemy_spinning.gd" id="1_oyq44"]
+[ext_resource type="Script" uid="uid://k0gsi537dxmd" path="res://scripts/enemy_spinning.gd" id="1_oyq44"]
 [ext_resource type="Texture2D" uid="uid://cw7q5hw1sxkgg" path="res://sprites/Temp_Player.png" id="2_a65fb"]
-[ext_resource type="Resource" uid="uid://csex305co04qa" path="res://assets/Temp_Sword.tres" id="2_aobe2"]
+[ext_resource type="Resource" uid="uid://d05d1fytxfgvg" path="res://assets/Temp_eSword.tres" id="2_aobe2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1wlia"]
 size = Vector2(12, 12)
