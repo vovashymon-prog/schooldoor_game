@@ -10,7 +10,7 @@ var is_invul := false
 @onready var sword = $sword
 @onready var audio = $Audio
 var clash_sound = preload("res://audio/Sword/ThoSwordsHit_1.wav")
-#var critical_sound = preload()
+var critical_sound = preload("res://audio/Sword/Critical hit.wav")
 
 var input: Vector2
 
@@ -25,11 +25,18 @@ func process_invul():
 func take_damage(amount):
 	if !is_invul:
 		hp -= amount
+		print(hp)
 		process_invul()
 		if hp <= 0:
-			pass
+			audio.stream = critical_sound
+			audio.play()
+			queue_free()
 		else:
-			pass
+			audio.stream = critical_sound
+			audio.play()
+		modulate = Color(7.759, 7.759, 7.759, 1.0)
+		await get_tree().create_timer(0.33).timeout
+		modulate = Color(1.0, 1.0, 1.0)
 
 func get_input():
 	input.y = Input.get_action_strength("down") - Input.get_action_strength("up")
