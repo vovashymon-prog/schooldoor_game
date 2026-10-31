@@ -4,6 +4,7 @@
 [ext_resource type="Resource" uid="uid://csex305co04qa" path="res://assets/Temp_Sword.tres" id="2_dqkch"]
 [ext_resource type="Texture2D" uid="uid://j01egnrq2abm" path="res://sprites/Player/Player_Front.png" id="3_qhqgy"]
 [ext_resource type="Texture2D" uid="uid://d2gfb2iq8pp1b" path="res://sprites/HP_Bar.png" id="4_dqkch"]
+[ext_resource type="Texture2D" uid="uid://cfnwdx0dvsf5j" path="res://sprites/Blood_drop.png" id="5_qlg0r"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1wlia"]
 size = Vector2(12, 18)
@@ -90,6 +91,27 @@ offset_right = 1000.0
 offset_bottom = 90.0
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("4_dqkch")
+
+[node name="Drop1" type="TextureRect" parent="CanvasLayer" unique_id=1334366733]
+offset_left = 5.0
+offset_top = 28.0
+offset_right = 37.0
+offset_bottom = 60.0
+texture = ExtResource("5_qlg0r")
+
+[node name="Drop2" type="TextureRect" parent="CanvasLayer" unique_id=1306677455]
+offset_left = 38.0
+offset_top = 28.0
+offset_right = 70.0
+offset_bottom = 60.0
+texture = ExtResource("5_qlg0r")
+
+[node name="Drop3" type="TextureRect" parent="CanvasLayer" unique_id=1911795443]
+offset_left = 69.0
+offset_top = 28.0
+offset_right = 101.0
+offset_bottom = 60.0
+texture = ExtResource("5_qlg0r")
 
 [connection signal="area_entered" from="sword" to="." method="_on_sword_area_entered"]
 [connection signal="body_entered" from="sword" to="." method="_on_sword_body_entered"]

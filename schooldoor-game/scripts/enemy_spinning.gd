@@ -52,6 +52,7 @@ func take_damage(amount):
 			if player != null: 
 				player.audio_hits.stream = critical_sound
 				player.audio_hits.play()
+				player.drop_count += 1
 			var blood = blood_particles_high.instantiate()
 			get_parent().add_child(blood)
 			blood.global_position = global_position
