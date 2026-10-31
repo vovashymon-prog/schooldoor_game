@@ -1,16 +1,34 @@
-[gd_scene format=3 uid="uid://cah2iqh67jxyw"]
+[gd_scene format=3 uid="uid://cqxbvrn68qcif"]
 
+[ext_resource type="Script" uid="uid://240f1ie10b5n" path="res://scripts/room_progression.gd" id="1_0bbpv"]
 [ext_resource type="PackedScene" uid="uid://ckggwh6ev2v3y" path="res://scenes/player.tscn" id="2_rvslj"]
-[ext_resource type="PackedScene" uid="uid://73cvu0q3oj8" path="res://scenes/enemy_directed.tscn" id="5_vcsgt"]
-[ext_resource type="PackedScene" uid="uid://cxo8dccjtgjhs" path="res://scenes/rooms/Room1.tscn" id="6_c01mt"]
+[ext_resource type="PackedScene" uid="uid://df7ny55yimtmr" path="res://scenes/rooms/Room1.tscn" id="6_c01mt"]
 
-[node name="Main" type="Node2D" unique_id=1201342250]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1wlia"]
+size = Vector2(32, 20)
+
+[node name="Main" type="Node2D" unique_id=1201342250 groups=["main"]]
+script = ExtResource("1_0bbpv")
 
 [node name="Room1" parent="." unique_id=141071005 instance=ExtResource("6_c01mt")]
-position = Vector2(-129, -148)
 
 [node name="Player" parent="." unique_id=972149547 instance=ExtResource("2_rvslj")]
-position = Vector2(-55, -35)
+position = Vector2(128, 293)
 
-[node name="EnemyDirected" parent="." unique_id=1944998283 instance=ExtResource("5_vcsgt")]
-position = Vector2(29, 95)
+[node name="Transitions" type="Area2D" parent="." unique_id=232355234]
+position = Vector2(122, 47)
+collision_layer = 32
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Transitions" unique_id=1127807435]
+position = Vector2(6, 0)
+shape = SubResource("RectangleShape2D_1wlia")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=221974600]
+
+[node name="Fade" type="ColorRect" parent="CanvasLayer" unique_id=1647282766]
+offset_right = 1200.0
+offset_bottom = 800.0
+mouse_filter = 2
+color = Color(0, 0, 0, 0)
+
+[connection signal="body_entered" from="Transitions" to="." method="_on_transition_body_entered"]

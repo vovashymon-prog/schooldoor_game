@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://3b2ikr6uskmv"
-path="res://.godot/imported/Long steps.wav-e566db41b648622543ecf5a1c4bf0292.sample"
+path="res://.godot/imported/Long steps.wav-0f6fa55915976a679a1198b1c1ca22e1.sample"
 
 [deps]
 
-source_file="res://audio/Steps/Long steps.wav"
-dest_files=["res://.godot/imported/Long steps.wav-e566db41b648622543ecf5a1c4bf0292.sample"]
+source_file="res://audio/steps/Long steps.wav"
+dest_files=["res://.godot/imported/Long steps.wav-0f6fa55915976a679a1198b1c1ca22e1.sample"]
 
 [params]
 

@@ -59,6 +59,8 @@ func take_damage(amount):
 			get_parent().add_child(blood)
 			blood.global_position = global_position
 			blood.emitting = true
+			var main = get_tree().get_first_node_in_group("main")
+			if main != null: main.enemies_killed += 1
 			queue_free()
 		else:
 			if player != null: 

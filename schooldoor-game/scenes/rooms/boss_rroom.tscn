@@ -89,6 +89,10 @@ custom_data_layer_0/type = 0
 sources/0 = SubResource("TileSetAtlasSource_vplxy")
 
 [node name="Room1" type="Node2D" unique_id=141071005]
+z_index = -1
+
+[node name="PlayerSpawnPosition" type="Marker2D" parent="." unique_id=82701002]
+position = Vector2(184, 376)
 
 [node name="Layer0" type="TileMapLayer" parent="." unique_id=283390829]
 use_parent_material = true
@@ -109,6 +113,3 @@ tile_set = ExtResource("1_h0rbl")
 use_parent_material = true
 tile_map_data = PackedByteArray("AAAPAA0AAAAFAAMAAAANAA8AAAAFAAMAAAAJABQAAAAFAAQAAAANABIAAAAFAAQAAAALABIAAAAGAAEAAAAUAAcAAAAGAAEAAAA=")
 tile_set = SubResource("TileSet_eud5g")
-
-[node name="PlayerSpawnPosition" type="Marker2D" parent="." unique_id=82701002]
-position = Vector2(184, 348)

@@ -2,7 +2,11 @@
 
 [ext_resource type="TileSet" uid="uid://jb20uc7r0byd" path="res://tilesets/new_tile_set.tres" id="1_vplxy"]
 
-[node name="Room1" type="Node2D" unique_id=141071005]
+[node name="Room2" type="Node2D" unique_id=141071005]
+z_index = -1
+
+[node name="PlayerSpawnPosition" type="Marker2D" parent="." unique_id=82701002]
+position = Vector2(128, 168)
 
 [node name="Layer0" type="TileMapLayer" parent="." unique_id=283390829]
 use_parent_material = true
@@ -23,6 +27,3 @@ tile_set = ExtResource("1_vplxy")
 use_parent_material = true
 tile_map_data = PackedByteArray("AAAIAAAAAgAGAAYAAAAHAAAAAgAFAAYAAAAHAAEAAgAFAAcAAAAIAAEAAgAGAAcAAAAHAAIAAgAFAAgAAAAIAAIAAgAGAAgAAAA=")
 tile_set = ExtResource("1_vplxy")
-
-[node name="PlayerSpawnPosition" type="Marker2D" parent="." unique_id=82701002]
-position = Vector2(133, 147)

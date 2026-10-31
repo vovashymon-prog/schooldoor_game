@@ -21,6 +21,10 @@ var dash_dir
 @onready var full_drop: Texture = preload("res://sprites/Blood_drop.png")
 @onready var empty_drop: Texture = preload("res://sprites/Empty_drop.png")
 var drop_count := 3
+var door_sound = preload("res://audio/Sword/DoorOpen.wav")
+var steps_sound = preload("res://audio/steps/Long steps.wav")
+var dash_sound = preload("res://audio/Sword/Dash.wav")
+var heal_sound = preload("res://audio/Sword/Healing.wav")
 var clash_sound = preload("res://audio/Sword/ThoSwordsHit_1.wav")
 var hit_sound = preload("res://audio/Sword/FleshHit.wav")
 var critical_sound = preload("res://audio/Sword/Critical hit.wav")
@@ -125,6 +129,8 @@ func pause():
 func dash():
 	is_dashing = true
 	drop_count = 0
+	audio_steps.stream = dash_sound
+	audio_steps.play()
 	dash_dir = global_position.direction_to(get_global_mouse_position())
 	process_invul(0.29 * dash_power)
 	flash_anim(Color(1.263, 1.166, 0.288, 1.0), 0.12 * dash_power)
@@ -161,6 +167,11 @@ func _process(delta):
 	# WALKING
 	velocity = lerp(velocity, player_input * speed, accelration * delta)
 	move_and_slide()
+	if player_input != Vector2.ZERO && !audio_steps.playing:
+		audio_steps.stream = steps_sound
+		audio_steps.play()
+	elif player_input == Vector2.ZERO && !is_dashing:
+		audio_steps.stop()
 	
 	# SWORD
 	var direction = global_position.direction_to(get_global_mouse_position())
