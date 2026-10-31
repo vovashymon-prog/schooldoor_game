@@ -5,12 +5,16 @@
 [ext_resource type="PackedScene" uid="uid://doxgtb8uxlk6q" path="res://scenes/enemy_spinning.tscn" id="3_0bbpv"]
 [ext_resource type="PackedScene" uid="uid://c8i2qxyhnfpl2" path="res://scenes/heal_potion.tscn" id="4_rarhs"]
 [ext_resource type="PackedScene" uid="uid://73cvu0q3oj8" path="res://scenes/enemy_directed.tscn" id="5_vcsgt"]
+[ext_resource type="PackedScene" uid="uid://cxo8dccjtgjhs" path="res://scenes/rooms/Room1.tscn" id="6_c01mt"]
 
 [node name="Main" type="Node2D" unique_id=131962426]
 
 [node name="TempTileset" type="Sprite2D" parent="." unique_id=1486703037]
 scale = Vector2(10, 10)
 texture = ExtResource("1_rvslj")
+
+[node name="Room1" parent="." unique_id=141071005 instance=ExtResource("6_c01mt")]
+position = Vector2(-113, -153)
 
 [node name="Player" parent="." unique_id=972149547 instance=ExtResource("2_rvslj")]
 
