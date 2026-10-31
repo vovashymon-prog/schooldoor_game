@@ -5,6 +5,9 @@
 [ext_resource type="Script" uid="uid://bx6edqmb07fck" path="res://scripts/button_animation.gd" id="3_xpiny"]
 [ext_resource type="Texture2D" uid="uid://d01upqrklrrdf" path="res://sprites/Sword_for_menu.png" id="4_bhu4a"]
 [ext_resource type="Script" uid="uid://bwob1sus0b2yv" path="res://scripts/floating_for_swords_in_menu.gd" id="5_e2per"]
+[ext_resource type="Texture2D" uid="uid://dec1ht3x55t1f" path="res://sprites/clown mask1_for_menu.png" id="6_e2per"]
+[ext_resource type="Script" uid="uid://ktqkioghagcv" path="res://scenes/ui/clown_mask_1_for_menu.gd" id="7_7mi0g"]
+[ext_resource type="Texture2D" uid="uid://dw008u1vqh5pq" path="res://sprites/clown mask0_for_menu.png" id="8_7mi0g"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0ykhv"]
 bg_color = Color(0.101960786, 0.12156863, 0.2, 1)
@@ -104,7 +107,7 @@ theme_override_constants/line_spacing = 3
 theme_override_constants/shadow_offset_x = 2
 theme_override_fonts/font = ExtResource("1_yqorp")
 theme_override_font_sizes/font_size = 56
-text = "GAME NAME"
+text = "the clown forgotten"
 
 [node name="MarginContainer2" type="MarginContainer" parent="." unique_id=1662771322]
 layout_mode = 1
@@ -129,6 +132,15 @@ scale = Vector2(10, 10)
 texture = ExtResource("4_bhu4a")
 script = ExtResource("5_e2per")
 
+[node name="ClownMask1ForMenu" type="Sprite2D" parent="MarginContainer2" unique_id=1019313046]
+position = Vector2(-107, 72.999985)
+rotation = -1.7453293
+scale = Vector2(12.875, 12.875)
+texture = ExtResource("6_e2per")
+script = ExtResource("7_7mi0g")
+frame_1 = ExtResource("6_e2per")
+frame_2 = ExtResource("8_7mi0g")
+
 [node name="MarginContainer3" type="MarginContainer" parent="." unique_id=1336619496]
 layout_mode = 1
 anchors_preset = 4
@@ -148,6 +160,15 @@ rotation = 1.5707964
 scale = Vector2(10, 10)
 texture = ExtResource("4_bhu4a")
 script = ExtResource("5_e2per")
+
+[node name="ClownMask1ForMenu" type="Sprite2D" parent="MarginContainer3" unique_id=2104449612]
+position = Vector2(151, 80)
+rotation = 0.34906584
+scale = Vector2(12.875, 12.875)
+texture = ExtResource("6_e2per")
+script = ExtResource("7_7mi0g")
+frame_1 = ExtResource("6_e2per")
+frame_2 = ExtResource("8_7mi0g")
 
 [connection signal="mouse_entered" from="MarginContainer/VBoxContainer/ButtonPlay" to="MarginContainer/VBoxContainer/ButtonPlay" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="MarginContainer/VBoxContainer/ButtonPlay" to="MarginContainer/VBoxContainer/ButtonPlay" method="_on_mouse_exited"]
