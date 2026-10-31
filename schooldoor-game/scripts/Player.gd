@@ -21,6 +21,10 @@ var clash_sound = preload("res://audio/Sword/ThoSwordsHit_1.wav")
 var hit_sound = preload("res://audio/Sword/Regular hit.wav")
 var critical_sound = preload("res://audio/Sword/Critical hit.wav")
 
+var clash_particles = preload("res://scenes/particles/sparks.tscn")
+var blood_particles_low = preload("res://scenes/particles/basic_hit_blood.tscn")
+var blood_particles_high = preload("res://scenes/particles/lethal_hit_blood_clown.tscn")
+
 var pause_scene = preload("res://scenes/ui/pause_menu.tscn")
 
 var input: Vector2
@@ -121,6 +125,10 @@ func _on_sword_area_entered(area: Area2D) -> void:
 		enemy.inverted_spinning = not enemy.inverted_spinning
 		audio_clashes.stream = clash_sound
 		audio_clashes.play()
+		var sparks = clash_particles.instantiate()
+		get_parent().add_child(sparks)
+		sparks.global_position = (sword.global_position + area.global_position) / 2
+		sparks.emitting = true
 
 
 func _on_sword_body_entered(body: Node2D) -> void:

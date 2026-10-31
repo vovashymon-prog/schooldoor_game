@@ -23,6 +23,9 @@ var clash_sound = preload("res://audio/Sword/ThoSwordsHit_1.wav")
 var hit_sound = preload("res://audio/Sword/Regular hit.wav")
 var critical_sound = preload("res://audio/Sword/Critical hit.wav")
 
+var blood_particles_low = preload("res://scenes/particles/basic_hit_blood.tscn")
+var blood_particles_high = preload("res://scenes/particles/lethal_hit_blood_clown.tscn")
+
 var input: Vector2
 
 func process_invul():
@@ -49,11 +52,19 @@ func take_damage(amount):
 			if player != null: 
 				player.audio_hits.stream = critical_sound
 				player.audio_hits.play()
+			var blood = blood_particles_high.instantiate()
+			get_parent().add_child(blood)
+			blood.global_position = global_position
+			blood.emitting = true
 			queue_free()
 		else:
 			if player != null: 
 				player.audio_hits.stream = critical_sound
 				player.audio_hits.play()
+			var blood = blood_particles_low.instantiate()
+			get_parent().add_child(blood)
+			blood.global_position = global_position
+			blood.emitting = true
 
 func _ready():
 	hp = max_hp
