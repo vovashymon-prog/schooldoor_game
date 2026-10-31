@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://vf3u12db64dr"]
+
+[sub_resource type="Curve" id="Curve_8vrlf"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_nhiyh"]
+colors = PackedColorArray(1, 0.87058824, 0.39607844, 1, 1, 1, 1, 0)
+
+[node name="SparksForSwords" type="CPUParticles2D" unique_id=16746128]
+emitting = false
+amount = 20
+lifetime = 1.2
+one_shot = true
+preprocess = 0.55
+speed_scale = 1.27
+explosiveness = 1.0
+lifetime_randomness = 0.42
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_max = 32.9
+angle_min = -720.0
+angle_max = 720.0
+scale_amount_min = 4.0
+scale_amount_max = 8.0
+scale_amount_curve = SubResource("Curve_8vrlf")
+color = Color(1, 0.87058824, 0.39607844, 1)
+color_ramp = SubResource("Gradient_nhiyh")

@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://df7ny55yimtmr"]
+
+[ext_resource type="Texture2D" uid="uid://c32sxk641n617" path="res://sprites/Temp_Tileset.png" id="1_valjw"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tfpoq"]
+texture = ExtResource("1_valjw")
+0:0/0 = 0
+1:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_8vrlf"]
+sources/0 = SubResource("TileSetAtlasSource_tfpoq")
+
+[node name="Room1" type="Node2D" unique_id=141071005]
+
+[node name="TileMap" type="TileMap" parent="." unique_id=103367544]
+tile_set = SubResource("TileSet_8vrlf")
+format = 2

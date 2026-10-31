@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://c3ilj08e8dss2"]
+
+[sub_resource type="Curve" id="Curve_8vrlf"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="BasicHitBlood" type="CPUParticles2D" unique_id=16746128]
+emitting = false
+amount = 20
+one_shot = true
+preprocess = 0.55
+speed_scale = 1.27
+explosiveness = 0.78
+lifetime_randomness = 0.42
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_max = 67.47
+angle_min = -720.0
+angle_max = 720.0
+scale_amount_min = 10.0
+scale_amount_max = 13.47
+scale_amount_curve = SubResource("Curve_8vrlf")
+color = Color(0.5882353, 0.21176471, 0.22352941, 1)

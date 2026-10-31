@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://sdm1a24ce6he"]
+
+[sub_resource type="Curve" id="Curve_8vrlf"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_85fsr"]
+colors = PackedColorArray(1, 0, 0, 1, 0.34223887, 0.54466426, 1, 1)
+
+[node name="LethalHitBloodClown" type="CPUParticles2D" unique_id=16746128]
+emitting = false
+amount = 12
+lifetime = 1.04
+one_shot = true
+preprocess = 0.03
+speed_scale = 1.63
+explosiveness = 1.0
+lifetime_randomness = 0.31
+direction = Vector2(0, -1)
+spread = 27.86
+gravity = Vector2(0, 0)
+initial_velocity_max = 67.47
+radial_accel_max = 53.17
+angle_min = -720.0
+angle_max = 720.0
+scale_amount_min = 7.0
+scale_amount_max = 10.0
+scale_amount_curve = SubResource("Curve_8vrlf")
+color = Color(0.6039216, 0.5882353, 0.6666667, 1)
+color_ramp = SubResource("Gradient_85fsr")
