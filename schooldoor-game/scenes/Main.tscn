@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://ckggwh6ev2v3y" path="res://scenes/player.tscn" id="2_rvslj"]
 [ext_resource type="PackedScene" uid="uid://73cvu0q3oj8" path="res://scenes/enemy_directed.tscn" id="5_vcsgt"]
-[ext_resource type="PackedScene" uid="uid://df7ny55yimtmr" path="res://scenes/rooms/Room1.tscn" id="6_c01mt"]
+[ext_resource type="PackedScene" uid="uid://cxo8dccjtgjhs" path="res://scenes/rooms/Room1.tscn" id="6_c01mt"]
 
 [node name="Main" type="Node2D" unique_id=1201342250]
 
