@@ -2,6 +2,9 @@
 
 [ext_resource type="Script" uid="uid://c4k83tkaom1cb" path="res://scripts/pause_menu.gd" id="1_6jbdy"]
 [ext_resource type="FontFile" uid="uid://cqy7r0bgc4rbt" path="res://fonts/Digital_Thin.ttf" id="1_yqorp"]
+[ext_resource type="Script" uid="uid://bx6edqmb07fck" path="res://scripts/button_animation.gd" id="3_xpiny"]
+[ext_resource type="Texture2D" uid="uid://d01upqrklrrdf" path="res://sprites/Sword_for_menu.png" id="4_bhu4a"]
+[ext_resource type="Script" uid="uid://bwob1sus0b2yv" path="res://scripts/floating_for_swords_in_menu.gd" id="5_e2per"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0ykhv"]
 bg_color = Color(0.101960786, 0.12156863, 0.2, 1)
@@ -54,7 +57,7 @@ grow_vertical = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=181268511]
 layout_mode = 2
-theme_override_constants/separation = 20
+theme_override_constants/separation = 47
 
 [node name="ButtonPlay" type="Button" parent="MarginContainer/VBoxContainer" unique_id=1817896532]
 custom_minimum_size = Vector2(320, 80)
@@ -67,6 +70,7 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_0ykhv")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_2wh52")
 theme_override_styles/hover = SubResource("StyleBoxFlat_ow34m")
 text = "PLAY"
+script = ExtResource("3_xpiny")
 
 [node name="ButtonQuit" type="Button" parent="MarginContainer/VBoxContainer" unique_id=1128105627]
 custom_minimum_size = Vector2(320, 80)
@@ -79,6 +83,7 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_0ykhv")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_2wh52")
 theme_override_styles/hover = SubResource("StyleBoxFlat_ow34m")
 text = "QUIT"
+script = ExtResource("3_xpiny")
 
 [node name="GameName" type="Label" parent="." unique_id=1150554922]
 layout_mode = 1
@@ -101,5 +106,52 @@ theme_override_fonts/font = ExtResource("1_yqorp")
 theme_override_font_sizes/font_size = 56
 text = "GAME NAME"
 
+[node name="MarginContainer2" type="MarginContainer" parent="." unique_id=1662771322]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -20.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/margin_left = -115
+
+[node name="Control" type="Control" parent="MarginContainer2" unique_id=1384323274]
+layout_mode = 2
+
+[node name="SwordForMenu2" type="Sprite2D" parent="MarginContainer2/Control" unique_id=1604485821]
+rotation = 1.5707964
+scale = Vector2(10, 10)
+texture = ExtResource("4_bhu4a")
+script = ExtResource("5_e2per")
+
+[node name="MarginContainer3" type="MarginContainer" parent="." unique_id=1336619496]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -20.0
+offset_right = 40.0
+offset_bottom = 20.0
+grow_vertical = 2
+theme_override_constants/margin_left = 155
+
+[node name="Control" type="Control" parent="MarginContainer3" unique_id=897686953]
+layout_mode = 2
+
+[node name="SwordForMenu2" type="Sprite2D" parent="MarginContainer3/Control" unique_id=1329997525]
+rotation = 1.5707964
+scale = Vector2(10, 10)
+texture = ExtResource("4_bhu4a")
+script = ExtResource("5_e2per")
+
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/ButtonPlay" to="MarginContainer/VBoxContainer/ButtonPlay" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="MarginContainer/VBoxContainer/ButtonPlay" to="MarginContainer/VBoxContainer/ButtonPlay" method="_on_mouse_exited"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/ButtonPlay" to="." method="_on_inMenu_play_pressed"]
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/ButtonQuit" to="MarginContainer/VBoxContainer/ButtonQuit" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="MarginContainer/VBoxContainer/ButtonQuit" to="MarginContainer/VBoxContainer/ButtonQuit" method="_on_mouse_exited"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/ButtonQuit" to="." method="_on_quit_pressed"]
