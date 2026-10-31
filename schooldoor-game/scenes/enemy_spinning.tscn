@@ -3,12 +3,13 @@
 [ext_resource type="Script" uid="uid://k0gsi537dxmd" path="res://scripts/enemy_spinning.gd" id="1_oyq44"]
 [ext_resource type="Texture2D" uid="uid://cw7q5hw1sxkgg" path="res://sprites/Temp_Player.png" id="2_a65fb"]
 [ext_resource type="Resource" uid="uid://d05d1fytxfgvg" path="res://assets/Temp_eSword.tres" id="2_aobe2"]
+[ext_resource type="Texture2D" uid="uid://ct1q5t66u15r4" path="res://sprites/Temp_Sword.png" id="4_aobe2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1wlia"]
 size = Vector2(12, 12)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ddhyt"]
-size = Vector2(16, 8)
+size = Vector2(16, 4)
 
 [node name="EnemySpinning" type="CharacterBody2D" unique_id=972149547 groups=["enemies"]]
 collision_layer = 4
@@ -36,6 +37,7 @@ collision_mask = 3
 
 [node name="sword_sprite" type="Sprite2D" parent="axis/sword" unique_id=1045923936]
 position = Vector2(18, 0)
+texture = ExtResource("4_aobe2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="axis/sword" unique_id=527752254]
 position = Vector2(18, 0)

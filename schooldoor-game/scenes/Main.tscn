@@ -17,10 +17,8 @@ texture = ExtResource("1_rvslj")
 [node name="HealPotion" parent="." unique_id=98250702 instance=ExtResource("4_rarhs")]
 position = Vector2(-103, 73)
 
-[node name="EnemyDirected" parent="." unique_id=1568689281 instance=ExtResource("5_vcsgt")]
-position = Vector2(81, 129)
-circling_distance = 30
-
 [node name="EnemySpinning" parent="." unique_id=767441786 instance=ExtResource("3_0bbpv")]
 position = Vector2(102, -102)
-circling_distance = 21
+
+[node name="EnemyDirected" parent="." unique_id=1304301635 instance=ExtResource("5_vcsgt")]
+position = Vector2(92, 79)

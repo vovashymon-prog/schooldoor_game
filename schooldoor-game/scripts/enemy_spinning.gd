@@ -16,11 +16,15 @@ var is_invul := false
 @onready var axis = $axis
 @onready var sword = $axis/sword
 @onready var audio = $Audio
+var player_orbit
+var bobber
 @onready var player = get_tree().get_first_node_in_group("player")
-@onready var player_orbit = get_tree().get_first_node_in_group("pOrbit")
 var clash_sound = preload("res://audio/Sword/ThoSwordsHit_1.wav")
 var hit_sound = preload("res://audio/Sword/Regular hit.wav")
 var critical_sound = preload("res://audio/Sword/Critical hit.wav")
+
+var blood_particles_low = preload("res://scenes/particles/basic_hit_blood.tscn")
+var blood_particles_high = preload("res://scenes/particles/lethal_hit_blood_clown.tscn")
 
 var input: Vector2
 
@@ -48,17 +52,39 @@ func take_damage(amount):
 			if player != null: 
 				player.audio_hits.stream = critical_sound
 				player.audio_hits.play()
+			var blood = blood_particles_high.instantiate()
+			get_parent().add_child(blood)
+			blood.global_position = global_position
+			blood.emitting = true
 			queue_free()
 		else:
 			if player != null: 
 				player.audio_hits.stream = critical_sound
 				player.audio_hits.play()
+			var blood = blood_particles_low.instantiate()
+			get_parent().add_child(blood)
+			blood.global_position = global_position
+			blood.emitting = true
 
 func _ready():
+	hp = max_hp
 	if sword_item: sword.get_child(0).texture = sword_item.texture
 	if max_swing != 0.0:
 		var playerDir = (player.global_position - global_position)
 		sword.look_at(playerDir)
+
+func create_orbit():
+	if player_orbit != null && bobber != null: return
+	player_orbit = Node2D.new()
+	bobber = Node2D.new()
+	player_orbit.add_child(bobber)
+	player.add_child(player_orbit)
+	player_orbit.position = Vector2.ZERO
+	bobber.position = Vector2(circling_distance - 2.5, 0)
+
+func clear_orbit():
+	if player_orbit != null: player_orbit.queue_free()
+	if bobber != null: bobber.queue_free()
 
 func _process(delta):
 	# WALKING
@@ -66,16 +92,15 @@ func _process(delta):
 	if direction.length() > circling_distance:
 		velocity = lerp(velocity, direction * speed, accelration * delta)
 		move_and_slide()
+		clear_orbit()
 	else:
-		player_orbit.get_child(0).position.x = circling_distance - 2.5
+		create_orbit()
 		player_orbit.rotation += circling_speed * delta
-		direction = player_orbit.get_child(0).global_position - global_position
+		direction = bobber.global_position - global_position
 		velocity = lerp(velocity, direction * speed * flanking_mult, accelration * delta * 10)
 		move_and_slide()
 	
 	# SWORD
-	#var direction = global_position.direction_to(get_global_mouse_position())
-	#var angle = direction.angle()
 	if max_swing == 0:
 		if sword_item && !inverted_spinning: sword.rotation += -sword_item.speed * delta
 		elif sword_item && inverted_spinning: sword.rotation += sword_item.speed * delta
