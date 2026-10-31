@@ -3,6 +3,8 @@ extends CharacterBody2D
 @export var speed = 100
 @export var accelration = 20.0
 @export var max_hp := 100
+@export var dash_power := 1.0
+@export var dash_cd := 0.75
 var hp := 100
 var is_invul := false
 var can_dash := true
@@ -81,11 +83,11 @@ func pause():
 func dash():
 	is_dashing = true
 	dash_dir = global_position.direction_to(get_global_mouse_position())
-	process_invul(0.25)
-	flash_anim(Color(1.263, 1.166, 0.288, 1.0), 0.12)
-	await get_tree().create_timer(0.24).timeout
+	process_invul(0.29 * dash_power)
+	flash_anim(Color(1.263, 1.166, 0.288, 1.0), 0.12 * dash_power)
+	await get_tree().create_timer(0.24 *dash_power).timeout
 	is_dashing = false
-	await get_tree().create_timer(0.75).timeout
+	await get_tree().create_timer(dash_cd).timeout
 	can_dash = true
 
 func _process(delta):
