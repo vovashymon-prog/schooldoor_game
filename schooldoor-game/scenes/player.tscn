@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://ckggwh6ev2v3y"]
 
 [ext_resource type="Script" uid="uid://cii8qr27bvlqc" path="res://scripts/Player.gd" id="1_qhqgy"]
-[ext_resource type="Resource" uid="uid://csex305co04qa" path="res://assets/Temp_Sword.tres" id="2_dqkch"]
+[ext_resource type="Resource" uid="uid://2xmnyofmd8vb" path="res://assets/Player_Main.tres" id="2_qlg0r"]
 [ext_resource type="Texture2D" uid="uid://j01egnrq2abm" path="res://sprites/Player/Player_Front.png" id="3_qhqgy"]
 [ext_resource type="Texture2D" uid="uid://d2gfb2iq8pp1b" path="res://sprites/HP_Bar.png" id="4_dqkch"]
 [ext_resource type="Texture2D" uid="uid://cfnwdx0dvsf5j" path="res://sprites/Blood_drop.png" id="5_qlg0r"]
@@ -39,7 +39,7 @@ corner_detail = 6
 [node name="Player" type="CharacterBody2D" unique_id=972149547 groups=["player"]]
 collision_mask = 24
 script = ExtResource("1_qhqgy")
-sword_item = ExtResource("2_dqkch")
+sword_item = ExtResource("2_qlg0r")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=208109745]
 zoom = Vector2(3, 3)
@@ -57,10 +57,10 @@ collision_layer = 2
 collision_mask = 12
 
 [node name="sword_sprite" type="Sprite2D" parent="sword" unique_id=954582580]
-position = Vector2(20, 0)
+position = Vector2(17, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="sword" unique_id=1160257002]
-position = Vector2(20, 0)
+position = Vector2(17, 0)
 shape = SubResource("RectangleShape2D_qhqgy")
 
 [node name="Audio_Steps" type="AudioStreamPlayer2D" parent="." unique_id=1030331497]

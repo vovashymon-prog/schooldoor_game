@@ -19,6 +19,7 @@ circling_speed = 1.75
 circling_distance = 50
 flanking_mult = 2.0
 max_swing = 1.047
+is_invertable = false
 sword_item = ExtResource("2_kbgbo")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2106482395]

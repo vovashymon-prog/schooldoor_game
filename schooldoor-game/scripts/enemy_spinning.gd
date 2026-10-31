@@ -10,6 +10,8 @@ extends CharacterBody2D
 var hp := 100
 var inverted_spinning := false
 var is_invul := false
+var is_sword_stunned := false
+@export var is_invertable := true
 
 @export var sword_item: Item
 @onready var sprite = $Sprite2D
@@ -81,13 +83,20 @@ func create_orbit():
 	player_orbit.add_child(bobber)
 	player.add_child(player_orbit)
 	player_orbit.position = Vector2.ZERO
-	bobber.position = Vector2(circling_distance - 2.5, 0)
+	bobber.position = Vector2(circling_distance - 5.5, 0)
 
 func clear_orbit():
 	if player_orbit != null: player_orbit.queue_free()
+	player_orbit = null
 	if bobber != null: bobber.queue_free()
+	bobber = null
 
-func _process(delta):
+func stun_sword(time = 0.33):
+	is_sword_stunned = true
+	await get_tree().create_timer(time).timeout
+	is_sword_stunned = false
+
+func _physics_process(delta: float) -> void:
 	# WALKING
 	var direction = player.global_position - global_position
 	if direction.length() > circling_distance:
@@ -98,18 +107,23 @@ func _process(delta):
 		create_orbit()
 		player_orbit.rotation += circling_speed * delta
 		direction = bobber.global_position - global_position
-		velocity = lerp(velocity, direction * speed * flanking_mult, accelration * delta * 10)
+		velocity = lerp(velocity, direction * speed * flanking_mult, clamp((accelration * delta * 10), 0.0, 1.0))
 		move_and_slide()
-	
+
+func _process(delta):
 	# SWORD
+	if is_sword_stunned: return
 	if max_swing == 0:
 		if sword_item && !inverted_spinning: sword.rotation += -sword_item.speed * delta
 		elif sword_item && inverted_spinning: sword.rotation += sword_item.speed * delta
 	else:
 		var playerDir = (player.global_position - global_position)
 		var playerAngle = playerDir.angle()
+		var old_axis_rot = axis.rotation
 		axis.rotation = rotate_toward(axis.rotation, playerAngle, sword_item.speed)
-		if abs(sword.rotation) >= max_swing: 
+		var axis_delta = axis.rotation - old_axis_rot
+		sword.rotation -= axis_delta
+		if abs(sword.rotation) >= max_swing + PI / 18: 
 			inverted_spinning = not inverted_spinning
 			sword.rotation = (max_swing - 0.01) * sign(sword.rotation)
 		if sword_item && !inverted_spinning: sword.rotation += -sword_item.speed * delta

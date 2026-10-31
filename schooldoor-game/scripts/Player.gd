@@ -35,7 +35,10 @@ var input: Vector2
 
 func _ready():
 	hp = max_hp
-	if sword_item: sword.get_child(0).texture = sword_item.texture
+	if sword_item: 
+		sword.get_child(0).texture = sword_item.texture
+		sword.get_child(1).scale.x *= sword_item.length / 16.0
+		for ch in sword.get_children(): ch.position.x += (sword_item.length - 16.0) / 2
 	update_hp_bar()
 
 func process_invul(time = 0.33):
@@ -80,7 +83,6 @@ func get_input():
 	return input.normalized();
 
 func face_input(p_input):
-	print(p_input)
 	match int(sign(p_input.x)):
 		0: 
 			match int(sign(p_input.y)):
@@ -169,7 +171,8 @@ func _process(delta):
 func _on_sword_area_entered(area: Area2D) -> void:
 	if area.is_in_group("e_weapons"):
 		var enemy = area.get_parent().get_parent()
-		enemy.inverted_spinning = not enemy.inverted_spinning
+		if enemy.is_invertable: enemy.inverted_spinning = not enemy.inverted_spinning
+		#if enemy.max_swing != 0.0 && enemy.max_swing - abs(enemy.sword.rotation) <= PI / 20: enemy.stun_sword(0.34)
 		audio_clashes.stream = clash_sound
 		audio_clashes.play()
 		var sparks = clash_particles.instantiate()
