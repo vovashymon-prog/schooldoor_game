@@ -13,6 +13,7 @@ config_version=5
 config/name="schooldoor_game"
 run/main_scene="uid://daomxmtb7mu2f"
 config/features=PackedStringArray("4.7", "Forward Plus")
+boot_splash/image="uid://ot54cei4q45h"
 config/icon="uid://c5rqver3x53ci"
 
 [audio]

@@ -17,8 +17,12 @@ var dash_dir
 @onready var audio_steps = $Audio_Steps
 @onready var audio_hits = $Audio_Hits
 @onready var audio_clashes = $Audio_Clashes
+@onready var drops = [$CanvasLayer/Drop1, $CanvasLayer/Drop2, $CanvasLayer/Drop3]
+@onready var full_drop: Texture = preload("res://sprites/Blood_drop.png")
+@onready var empty_drop: Texture = preload("res://sprites/Empty_drop.png")
+var drop_count := 3
 var clash_sound = preload("res://audio/Sword/ThoSwordsHit_1.wav")
-var hit_sound = preload("res://audio/Sword/Regular hit.wav")
+var hit_sound = preload("res://audio/Sword/FleshHit.wav")
 var critical_sound = preload("res://audio/Sword/Critical hit.wav")
 
 var clash_particles = preload("res://scenes/particles/sparks.tscn")
@@ -40,7 +44,7 @@ func process_invul(time = 0.33):
 	is_invul = false
 
 func update_hp_bar():
-	$HPBar.value = hp
+	$CanvasLayer/HPBar.value = hp
 
 func flash_anim(col = Color(7.759, 7.759, 7.759, 1.0), time = 0.16):
 	var tween = get_tree().create_tween()
@@ -67,13 +71,45 @@ func take_damage(amount):
 			audio_hits.play()
 			die()
 		else:
-			audio_hits.stream = critical_sound
+			audio_hits.stream = hit_sound
 			audio_hits.play()
 
 func get_input():
 	input.y = Input.get_action_strength("down") - Input.get_action_strength("up")
 	input.x = Input.get_action_strength("right") - Input.get_action_strength("left")
 	return input.normalized();
+
+func face_input(p_input):
+	print(p_input)
+	match int(sign(p_input.x)):
+		0: 
+			match int(sign(p_input.y)):
+				1: 
+					player_sprite.texture = preload("res://sprites/Player/Player_Front.png")
+					player_sprite.scale.x = 1
+				-1: 
+					player_sprite.texture = preload("res://sprites/Player/Player_Back.png")
+					player_sprite.scale.x = 1
+		1:
+			match int(sign(p_input.y)):
+				0: 
+					player_sprite.texture = preload("res://sprites/Player/Player_Profile.png")
+					player_sprite.scale.x = 1
+				1: 
+					player_sprite.texture = preload("res://sprites/Player/Player_Front.png")
+					player_sprite.scale.x = 1
+				-1: 
+					player_sprite.texture = preload("res://sprites/Player/Player_Back.png")
+					player_sprite.scale.x = 1
+		-1:
+			match int(sign(p_input.y)):
+				0: 
+					player_sprite.texture =preload("res://sprites/Player/Player_Profile.png")
+					player_sprite.scale.x = -1
+				1: 
+					player_sprite.texture = preload("res://sprites/Player/Player_Front.png")
+				-1: 
+					player_sprite.texture = preload("res://sprites/Player/Player_Back.png")
 
 func resume():
 	get_tree().paused = false
@@ -86,6 +122,7 @@ func pause():
 
 func dash():
 	is_dashing = true
+	drop_count = 0
 	dash_dir = global_position.direction_to(get_global_mouse_position())
 	process_invul(0.29 * dash_power)
 	flash_anim(Color(1.263, 1.166, 0.288, 1.0), 0.12 * dash_power)
@@ -94,8 +131,18 @@ func dash():
 	await get_tree().create_timer(dash_cd).timeout
 	can_dash = true
 
+func refresh_drops():
+	match drop_count:
+		0: for drop in drops: drop.texture = empty_drop
+		1: drops[0].texture = full_drop; drops[1].texture = empty_drop; drops[2].texture = empty_drop
+		2: drops[0].texture = full_drop; drops[1].texture = full_drop; drops[2].texture = empty_drop
+		3: for drop in drops: drop.texture = full_drop
+		_: for drop in drops: drop.texture = full_drop
+
 func _process(delta):
 	var player_input = get_input()
+	face_input(player_input)
+	refresh_drops()
 	
 	if Input.is_action_just_pressed("pause") && get_tree().paused:
 		resume()
@@ -106,7 +153,7 @@ func _process(delta):
 		velocity = lerp(velocity, dash_dir * speed * 5, accelration * delta)
 		move_and_slide()
 		return
-	if Input.is_action_just_pressed("dash") && can_dash:
+	if Input.is_action_just_pressed("dash") && can_dash && drop_count >= 3:
 		dash()
 		can_dash = false
 	# WALKING
@@ -134,3 +181,4 @@ func _on_sword_area_entered(area: Area2D) -> void:
 func _on_sword_body_entered(body: Node2D) -> void:
 	if body.is_in_group("enemies"):
 		body.take_damage(sword_item.power)
+		drop_count += 1
