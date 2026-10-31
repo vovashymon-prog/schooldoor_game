@@ -21,6 +21,7 @@ var pause_scene = preload("res://scenes/ui/pause_menu.tscn")
 var input: Vector2
 
 func _ready():
+	hp = max_hp
 	if sword_item: sword.get_child(0).texture = sword_item.texture
 	update_hp_bar()
 

@@ -8,7 +8,7 @@
 size = Vector2(12, 18)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qhqgy"]
-size = Vector2(16, 8)
+size = Vector2(16, 4)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qhqgy"]
 content_margin_left = 2.0
@@ -46,11 +46,6 @@ position_smoothing_speed = 10.0
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2106482395]
 texture = ExtResource("3_qhqgy")
-
-[node name="orbit" type="Node2D" parent="." unique_id=207759831 groups=["pOrbit"]]
-
-[node name="bobber" type="Node2D" parent="orbit" unique_id=136708257]
-position = Vector2(45, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1471116602]
 shape = SubResource("RectangleShape2D_1wlia")
