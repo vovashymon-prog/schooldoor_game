@@ -99,6 +99,7 @@ func _process(delta):
 	if is_dashing:
 		velocity = lerp(velocity, dash_dir * speed * 5, accelration * delta)
 		move_and_slide()
+		return
 	if Input.is_action_just_pressed("dash") && can_dash:
 		dash()
 		can_dash = false
