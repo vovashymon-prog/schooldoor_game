@@ -3,6 +3,10 @@
 [ext_resource type="TileSet" uid="uid://jb20uc7r0byd" path="res://tilesets/new_tile_set.tres" id="1_3w0v5"]
 
 [node name="Room2" type="Node2D" unique_id=473302688]
+z_index = -1
+
+[node name="PlayerSpawnPosition" type="Marker2D" parent="." unique_id=157524883]
+position = Vector2(80, 232)
 
 [node name="Layer0" type="TileMapLayer" parent="." unique_id=2051731956]
 use_parent_material = true
@@ -19,6 +23,3 @@ modulate = Color(1.2112623, 1.2112623, 1.2112623, 1)
 texture_filter = 1
 tile_map_data = PackedByteArray("AAAIAAAAAgAGAAYAAAAHAAAAAgAFAAYAAAAHAAEAAgAFAAcAAAAIAAEAAgAGAAcAAAAHAAIAAgAFAAgAAAAIAAIAAgAGAAgAAAA=")
 tile_set = ExtResource("1_3w0v5")
-
-[node name="PlayerSpawnPosition" type="Marker2D" parent="." unique_id=157524883]
-position = Vector2(79, 212)
