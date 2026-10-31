@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://dy6cll7qhh3t1"]
 
 [ext_resource type="TileSet" uid="uid://jb20uc7r0byd" path="res://tilesets/new_tile_set.tres" id="1_vplxy"]
+[ext_resource type="PackedScene" uid="uid://doxgtb8uxlk6q" path="res://scenes/enemy_spinning.tscn" id="2_vplxy"]
 
 [node name="Room2" type="Node2D" unique_id=141071005]
 z_index = -1
@@ -27,3 +28,6 @@ tile_set = ExtResource("1_vplxy")
 use_parent_material = true
 tile_map_data = PackedByteArray("AAAIAAAAAgAGAAYAAAAHAAAAAgAFAAYAAAAHAAEAAgAFAAcAAAAIAAEAAgAGAAcAAAAHAAIAAgAFAAgAAAAIAAIAAgAGAAgAAAA=")
 tile_set = ExtResource("1_vplxy")
+
+[node name="EnemySpinning" parent="." unique_id=972149547 instance=ExtResource("2_vplxy")]
+position = Vector2(128, 68)
