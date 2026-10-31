@@ -73,7 +73,7 @@ func create_orbit():
 
 func clear_orbit():
 	if player_orbit != null: player_orbit.queue_free()
-	if bobber != null: bobber.queuee_free()
+	if bobber != null: bobber.queue_free()
 
 func _process(delta):
 	# WALKING
@@ -90,8 +90,6 @@ func _process(delta):
 		move_and_slide()
 	
 	# SWORD
-	#var direction = global_position.direction_to(get_global_mouse_position())
-	#var angle = direction.angle()
 	if max_swing == 0:
 		if sword_item && !inverted_spinning: sword.rotation += -sword_item.speed * delta
 		elif sword_item && inverted_spinning: sword.rotation += sword_item.speed * delta

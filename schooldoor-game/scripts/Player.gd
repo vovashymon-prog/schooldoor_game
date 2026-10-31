@@ -5,6 +5,9 @@ extends CharacterBody2D
 @export var max_hp := 100
 var hp := 100
 var is_invul := false
+var can_dash := true
+var is_dashing := false
+var dash_dir
 
 @export var sword_item: Item
 @onready var sword = $sword
@@ -25,20 +28,20 @@ func _ready():
 	if sword_item: sword.get_child(0).texture = sword_item.texture
 	update_hp_bar()
 
-func process_invul():
+func process_invul(time = 0.33):
 	is_invul = true
-	await get_tree().create_timer(0.33).timeout
+	await get_tree().create_timer(time).timeout
 	is_invul = false
 
 func update_hp_bar():
 	$HPBar.value = hp
 
-func take_damage_anim():
+func flash_anim(col = Color(7.759, 7.759, 7.759, 1.0), time = 0.16):
 	var tween = get_tree().create_tween()
-	tween.tween_property(player_sprite, "modulate", Color(7.759, 7.759, 7.759, 1.0), 0.16)
+	tween.tween_property(player_sprite, "modulate", col, time)
 	tween.play()
 	await tween.finished; tween.kill(); tween = create_tween()
-	tween.tween_property(player_sprite, "modulate", Color("ffffffff"), 0.16)
+	tween.tween_property(player_sprite, "modulate", Color("ffffffff"), time)
 	tween.play()
 
 func die():
@@ -48,7 +51,7 @@ func take_damage(amount):
 	if !is_invul:
 		hp -= amount
 		update_hp_bar()
-		take_damage_anim()
+		flash_anim()
 		print(hp)
 		process_invul()
 		if hp <= 0:
@@ -75,6 +78,16 @@ func pause():
 	pause_menu.scale = Vector2(0.33, 0.33)
 	add_child(pause_menu)
 
+func dash():
+	is_dashing = true
+	dash_dir = global_position.direction_to(get_global_mouse_position())
+	process_invul(0.25)
+	flash_anim(Color(1.263, 1.166, 0.288, 1.0), 0.12)
+	await get_tree().create_timer(0.24).timeout
+	is_dashing = false
+	await get_tree().create_timer(0.75).timeout
+	can_dash = true
+
 func _process(delta):
 	var player_input = get_input()
 	
@@ -82,6 +95,13 @@ func _process(delta):
 		resume()
 	elif Input.is_action_just_pressed("pause"):
 		pause()
+	# DASHING
+	if is_dashing:
+		velocity = lerp(velocity, dash_dir * speed * 5, accelration * delta)
+		move_and_slide()
+	if Input.is_action_just_pressed("dash") && can_dash:
+		dash()
+		can_dash = false
 	# WALKING
 	velocity = lerp(velocity, player_input * speed, accelration * delta)
 	move_and_slide()
