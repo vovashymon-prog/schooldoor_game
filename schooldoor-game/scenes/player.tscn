@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://cii8qr27bvlqc" path="res://scripts/Player.gd" id="1_qhqgy"]
 [ext_resource type="Resource" uid="uid://csex305co04qa" path="res://assets/Temp_Sword.tres" id="2_dqkch"]
 [ext_resource type="Texture2D" uid="uid://j01egnrq2abm" path="res://sprites/Player/Player_Front.png" id="3_qhqgy"]
+[ext_resource type="Texture2D" uid="uid://d2gfb2iq8pp1b" path="res://sprites/HP_Bar.png" id="4_dqkch"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1wlia"]
 size = Vector2(12, 18)
@@ -69,11 +70,13 @@ bus = &"Hits"
 [node name="Audio_Clashes" type="AudioStreamPlayer2D" parent="." unique_id=182723677]
 bus = &"Clashes"
 
-[node name="HPBar" type="ProgressBar" parent="." unique_id=938784195]
-offset_left = -188.0
-offset_top = -105.0
-offset_right = -113.0
-offset_bottom = -89.0
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=971450524]
+
+[node name="HPBar" type="ProgressBar" parent="CanvasLayer" unique_id=938784195]
+offset_left = 8.0
+offset_top = 6.0
+offset_right = 293.0
+offset_bottom = 22.0
 theme_override_font_sizes/font_size = 8
 theme_override_styles/background = SubResource("StyleBoxFlat_qhqgy")
 theme_override_styles/fill = SubResource("StyleBoxFlat_dqkch")
@@ -81,6 +84,12 @@ step = 1.0
 value = 50.0
 rounded = true
 show_percentage = false
+
+[node name="HPFrame" type="TextureRect" parent="CanvasLayer" unique_id=2104209140]
+offset_right = 1000.0
+offset_bottom = 90.0
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("4_dqkch")
 
 [connection signal="area_entered" from="sword" to="." method="_on_sword_area_entered"]
 [connection signal="body_entered" from="sword" to="." method="_on_sword_body_entered"]

@@ -18,7 +18,7 @@ var dash_dir
 @onready var audio_hits = $Audio_Hits
 @onready var audio_clashes = $Audio_Clashes
 var clash_sound = preload("res://audio/Sword/ThoSwordsHit_1.wav")
-var hit_sound = preload("res://audio/Sword/Regular hit.wav")
+var hit_sound = preload("res://audio/Sword/FleshHit.wav")
 var critical_sound = preload("res://audio/Sword/Critical hit.wav")
 
 var clash_particles = preload("res://scenes/particles/sparks.tscn")
@@ -40,7 +40,7 @@ func process_invul(time = 0.33):
 	is_invul = false
 
 func update_hp_bar():
-	$HPBar.value = hp
+	$CanvasLayer/HPBar.value = hp
 
 func flash_anim(col = Color(7.759, 7.759, 7.759, 1.0), time = 0.16):
 	var tween = get_tree().create_tween()
@@ -67,7 +67,7 @@ func take_damage(amount):
 			audio_hits.play()
 			die()
 		else:
-			audio_hits.stream = critical_sound
+			audio_hits.stream = hit_sound
 			audio_hits.play()
 
 func get_input():

@@ -20,7 +20,7 @@ var player_orbit
 var bobber
 @onready var player = get_tree().get_first_node_in_group("player")
 var clash_sound = preload("res://audio/Sword/ThoSwordsHit_1.wav")
-var hit_sound = preload("res://audio/Sword/Regular hit.wav")
+var hit_sound = preload("res://audio/Sword/FleshHit.wav")
 var critical_sound = preload("res://audio/Sword/Critical hit.wav")
 
 var blood_particles_low = preload("res://scenes/particles/basic_hit_blood.tscn")
@@ -59,7 +59,7 @@ func take_damage(amount):
 			queue_free()
 		else:
 			if player != null: 
-				player.audio_hits.stream = critical_sound
+				player.audio_hits.stream = hit_sound
 				player.audio_hits.play()
 			var blood = blood_particles_low.instantiate()
 			get_parent().add_child(blood)
