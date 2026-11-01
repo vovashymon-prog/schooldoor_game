@@ -111,6 +111,24 @@ func _physics_process(delta: float) -> void:
 		direction = bobber.global_position - global_position
 		velocity = lerp(velocity, direction * speed * flanking_mult, clamp((accelration * delta * 10), 0.0, 1.0))
 		move_and_slide()
+	face_direction(direction)
+
+func face_direction(direction):
+	match int(sign(direction.x)):
+		1:
+			sprite.scale.x = 1
+		-1:
+			sprite.scale.x = -1
+	if abs(direction.x) > abs(direction.y):
+		if !is_invertable: sprite.texture = preload("res://sprites/Clown/Clown_Side.png")
+		else: sprite.texture = preload("res://sprites/Clown/Clown_Side2.png")
+	elif direction.y >= 0:
+		if !is_invertable: sprite.texture = preload("res://sprites/Clown/Clown_Front.png")
+		else: sprite.texture = preload("res://sprites/Clown/Clown_front_2.png")
+	else:
+		if !is_invertable: sprite.texture = preload("res://sprites/Clown/Clown_Back.png")
+		else: sprite.texture = preload("res://sprites/Clown/Clown_Back2.png")
+
 
 func _process(delta):
 	# SWORD

@@ -1,12 +1,12 @@
 [gd_scene format=3 uid="uid://doxgtb8uxlk6q"]
 
 [ext_resource type="Script" uid="uid://k0gsi537dxmd" path="res://scripts/enemy_spinning.gd" id="1_oyq44"]
-[ext_resource type="Texture2D" uid="uid://cw7q5hw1sxkgg" path="res://sprites/Temp_Player.png" id="2_a65fb"]
 [ext_resource type="Resource" uid="uid://d05d1fytxfgvg" path="res://assets/Temp_eSword.tres" id="2_aobe2"]
+[ext_resource type="Texture2D" uid="uid://bokgv0r1qqscx" path="res://sprites/Clown/Clown_front_2.png" id="3_aobe2"]
 [ext_resource type="Texture2D" uid="uid://ct1q5t66u15r4" path="res://sprites/Temp_Sword.png" id="4_aobe2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1wlia"]
-size = Vector2(12, 12)
+size = Vector2(12, 24)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ddhyt"]
 size = Vector2(16, 4)
@@ -21,8 +21,7 @@ flanking_mult = 3.5
 sword_item = ExtResource("2_aobe2")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2106482395]
-self_modulate = Color(0, 0.5716512, 0.9403632, 1)
-texture = ExtResource("2_a65fb")
+texture = ExtResource("3_aobe2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1471116602]
 shape = SubResource("RectangleShape2D_1wlia")

@@ -1,6 +1,6 @@
 extends Node2D
 
-@export var enemy_per_room := [2, 2, 3, 4]
+@export var enemy_per_room := [2, 2, 3, 4, 1]
 @export var rooms = [preload("res://scenes/rooms/Room3.tscn"), preload("res://scenes/rooms/Room1.tscn"), preload("res://scenes/rooms/Room2.tscn"), preload("res://scenes/rooms/Room4.tscn"), preload("res://scenes/rooms/boss_rroom.tscn")]
 var enemies_killed := 0
 var current_room := 1
@@ -20,6 +20,7 @@ func fade_screen():
 	tween.play()
 
 func change_scene():
+	if current_room == 5: get_tree().change_scene_to_file("res://scenes/ui/win_screen.tscn")
 	enemies_killed = 0
 	current_room_asset.queue_free()
 	current_room_asset = rooms[current_room].instantiate()
@@ -27,6 +28,7 @@ func change_scene():
 	add_child(current_room_asset)
 	current_room_asset.global_position = Vector2.ZERO
 	player.global_position = current_room_asset.get_child(0).global_position
+	if current_room == 4: $Transitions.position.x += 48
 
 func _on_transition_body_entered(body: Node2D) -> void:
 	if !body.is_in_group("player"): return
