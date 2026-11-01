@@ -193,6 +193,23 @@ func _on_sword_area_entered(area: Area2D) -> void:
 
 
 func _on_sword_body_entered(body: Node2D) -> void:
-	if body.is_in_group("enemies"):
+	if body.is_in_group("enemies") && body.accelration != 20.11:
 		body.take_damage(sword_item.power)
+		drop_count += 1
+	elif !body.is_in_group("enemies"): return
+	elif body.accelration != 20.11: return
+	elif body.is_in_group("enemies") && !body.attacking || body.is_in_group("enemies") && is_dashing:
+		body.take_damage(sword_item.power)
+		drop_count += 1
+	elif body.is_in_group("enemies"):
+		drop_count += 1
+
+
+func _on_sword_body_exited(body: Node2D) -> void:
+	if !body.is_in_group("enemies"): return
+	elif body.accelration != 20.11: return
+	elif body.is_in_group("enemies") && !body.attacking || body.is_in_group("enemies") && is_dashing:
+		body.take_damage(sword_item.power)
+		drop_count += 1
+	elif body.is_in_group("enemies"):
 		drop_count += 1

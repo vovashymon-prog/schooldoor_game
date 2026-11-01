@@ -1,0 +1,148 @@
+[gd_scene format=3 uid="uid://q6i3tpkhe71y"]
+
+[ext_resource type="Script" uid="uid://b68au1cu20tnt" path="res://scripts/boss_enemy.gd" id="1_wpjem"]
+[ext_resource type="Texture2D" uid="uid://cjxx4juctsigg" path="res://sprites/Bob/Bob_Idle.png" id="2_026v1"]
+[ext_resource type="Texture2D" uid="uid://ybi2ry57j4h1" path="res://sprites/Bob/2.png" id="3_51f71"]
+[ext_resource type="Texture2D" uid="uid://dv705rio27n4t" path="res://sprites/Bob/3.png" id="4_21558"]
+[ext_resource type="Texture2D" uid="uid://cp6dxv23nnbqm" path="res://sprites/Bob/4.png" id="5_eo2fq"]
+[ext_resource type="Texture2D" uid="uid://d2yiqamss45ij" path="res://sprites/Bob/5.png" id="6_aty27"]
+[ext_resource type="Texture2D" uid="uid://clwsf1tlh5qap" path="res://sprites/Bob/6.png" id="7_x87t2"]
+[ext_resource type="Texture2D" uid="uid://dj2w6jiikq3dn" path="res://sprites/Bob/7.png" id="8_5q7ld"]
+[ext_resource type="Texture2D" uid="uid://cptjc7hetfmt3" path="res://sprites/Bob/8.png" id="9_tlgew"]
+[ext_resource type="Texture2D" uid="uid://dg616iptaab6x" path="res://sprites/Bob/1.png" id="10_i1vwh"]
+[ext_resource type="Texture2D" uid="uid://desbpqmprb4fb" path="res://sprites/Player/Shadow_png.png" id="11_026v1"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1wlia"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_026v1")
+}],
+"loop": 1,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_51f71")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_21558")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_eo2fq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_aty27")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_x87t2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_5q7ld")
+}],
+"loop": 1,
+"name": &"Spin",
+"speed": 11.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_51f71")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_21558")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_eo2fq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_aty27")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_x87t2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_5q7ld")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_tlgew")
+}],
+"loop": 0,
+"name": &"Spin_End",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_i1vwh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_51f71")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_21558")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_eo2fq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_aty27")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_x87t2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_5q7ld")
+}],
+"loop": 0,
+"name": &"Spin_Start",
+"speed": 4.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ldqvh"]
+radius = 25.999844
+height = 64.00658
+
+[node name="Bob" type="CharacterBody2D" unique_id=972149547 groups=["enemies"]]
+z_index = 2
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_wpjem")
+speed = 0.95
+circling_speed = 1.0
+circling_distance = 140
+flanking_mult = 2.5
+max_hp = 1000
+
+[node name="Audio" type="AudioStreamPlayer2D" parent="." unique_id=1157805459]
+position = Vector2(2, -6)
+
+[node name="Shadow" type="Sprite2D" parent="." unique_id=750107946]
+z_index = 1
+position = Vector2(1.9999999, 25.999998)
+scale = Vector2(0.06, 0.06)
+texture = ExtResource("11_026v1")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1181789662]
+collision_layer = 4
+collision_mask = 3
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Area2D" unique_id=1316243015]
+position = Vector2(2, -6)
+sprite_frames = SubResource("SpriteFrames_1wlia")
+animation = &"Spin_Start"
+autoplay = "Idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1471116602]
+position = Vector2(2.3841858e-07, 3)
+rotation = 1.574276
+scale = Vector2(0.99999994, 0.99999994)
+shape = SubResource("CapsuleShape2D_ldqvh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1074697427]
+position = Vector2(2.3841858e-07, 3)
+rotation = 1.574276
+scale = Vector2(0.99999994, 0.99999994)
+shape = SubResource("CapsuleShape2D_ldqvh")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

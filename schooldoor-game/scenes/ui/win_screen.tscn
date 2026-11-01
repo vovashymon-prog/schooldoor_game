@@ -55,10 +55,10 @@ offset_right = 270.5
 offset_bottom = 52.5
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/font_color = Color(0.4, 0.3882353, 0.4392157, 1)
+theme_override_colors/font_color = Color(0.70710635, 0.69647527, 0.7440542, 1)
 theme_override_fonts/font = ExtResource("1_1cgod")
-theme_override_font_sizes/font_size = 67
-text = "THE DEVIL WAS FORGOTTEN"
+theme_override_font_sizes/font_size = 48
+text = "THE CLOWNS WERE FORGOTTEN FOR GOOD"
 
 [node name="ButtonMainMenu" type="Button" parent="Panel" unique_id=429621406]
 custom_minimum_size = Vector2(320, 80)
