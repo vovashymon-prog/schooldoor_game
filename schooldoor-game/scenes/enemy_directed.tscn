@@ -2,11 +2,11 @@
 
 [ext_resource type="Script" uid="uid://k0gsi537dxmd" path="res://scripts/enemy_spinning.gd" id="1_kbgbo"]
 [ext_resource type="Resource" uid="uid://ryn01hxtwc67" path="res://assets/Directed_eSword.tres" id="2_kbgbo"]
-[ext_resource type="Texture2D" uid="uid://cw7q5hw1sxkgg" path="res://sprites/Temp_Player.png" id="3_uf7jh"]
+[ext_resource type="Texture2D" uid="uid://q4wc7gqfjyuf" path="res://sprites/Clown/Clown_Front.png" id="3_gmoak"]
 [ext_resource type="Texture2D" uid="uid://bv8g03adb0o1w" path="res://sprites/sword1.png" id="4_gmoak"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1wlia"]
-size = Vector2(12, 12)
+size = Vector2(12, 24)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ddhyt"]
 size = Vector2(24, 4)
@@ -23,8 +23,7 @@ is_invertable = false
 sword_item = ExtResource("2_kbgbo")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2106482395]
-self_modulate = Color(6.6815276, 6.5298944, 1.7176237, 1)
-texture = ExtResource("3_uf7jh")
+texture = ExtResource("3_gmoak")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1471116602]
 shape = SubResource("RectangleShape2D_1wlia")
