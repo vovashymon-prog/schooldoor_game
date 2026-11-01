@@ -2,6 +2,15 @@
 
 [ext_resource type="TileSet" uid="uid://jb20uc7r0byd" path="res://tilesets/new_tile_set.tres" id="1_3w0v5"]
 [ext_resource type="PackedScene" uid="uid://73cvu0q3oj8" path="res://scenes/enemy_directed.tscn" id="2_2q7b5"]
+[ext_resource type="Script" uid="uid://rtfomaj3ijyt" path="res://scripts/Item.gd" id="3_jwyym"]
+[ext_resource type="Texture2D" uid="uid://dc06f54pt7yfo" path="res://sprites/ButcherKnife.png" id="4_v52wf"]
+
+[sub_resource type="Resource" id="Resource_e0shg"]
+script = ExtResource("3_jwyym")
+power = 30
+speed = 6.0
+texture = ExtResource("4_v52wf")
+metadata/_custom_type_script = "uid://rtfomaj3ijyt"
 
 [node name="Room2" type="Node2D" unique_id=473302688]
 z_index = -1
@@ -28,6 +37,7 @@ tile_set = ExtResource("1_3w0v5")
 [node name="EnemyDirected" parent="." unique_id=972149547 instance=ExtResource("2_2q7b5")]
 position = Vector2(79, 77)
 circling_distance = 30
-max_swing = 2.392
+max_swing = 90.0
 max_hp = 150
 is_invertable = true
+sword_item = SubResource("Resource_e0shg")

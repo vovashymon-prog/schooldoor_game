@@ -1,5 +1,6 @@
 extends Control
-
+func _ready() -> void:
+	MusicManager.play_menu()
 func _on_resume_pressed() -> void:
 	get_tree().paused = false
 	queue_free()

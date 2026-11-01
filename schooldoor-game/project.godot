@@ -20,6 +20,10 @@ config/icon="uid://c5rqver3x53ci"
 
 buses/default_bus_layout="uid://b0vd76hf8sp4m"
 
+[autoload]
+
+MusicManager="*uid://j7bymufo08dt"
+
 [display]
 
 window/stretch/mode="canvas_items"

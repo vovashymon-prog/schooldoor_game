@@ -4,18 +4,29 @@
 [ext_resource type="PackedScene" uid="uid://c8i2qxyhnfpl2" path="res://scenes/heal_potion.tscn" id="2_jroud"]
 [ext_resource type="PackedScene" uid="uid://73cvu0q3oj8" path="res://scenes/enemy_directed.tscn" id="3_uup0a"]
 [ext_resource type="Script" uid="uid://rtfomaj3ijyt" path="res://scripts/Item.gd" id="4_coqgv"]
-[ext_resource type="Texture2D" uid="uid://e3m1c2se2s5p" path="res://sprites/Keg.png" id="5_vs1ei"]
 [ext_resource type="PackedScene" uid="uid://doxgtb8uxlk6q" path="res://scenes/enemy_spinning.tscn" id="6_vs1ei"]
 
-[sub_resource type="Resource" id="Resource_dwwyj"]
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_coqgv"]
+load_path = "res://.godot/imported/ButcherKnife.png-8dd122ed6f5d93ffc897b9e517d242da.ctex"
+
+[sub_resource type="Resource" id="Resource_vs1ei"]
 script = ExtResource("4_coqgv")
-power = 32
-speed = 2.865
-length = 23
-texture = ExtResource("5_vs1ei")
+power = 20
+speed = 5.0
+texture = SubResource("CompressedTexture2D_coqgv")
 metadata/_custom_type_script = "uid://rtfomaj3ijyt"
 
-[node name="Room1" type="Node2D" unique_id=141071005]
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_dwwyj"]
+load_path = "res://.godot/imported/ButcherKnife.png-8dd122ed6f5d93ffc897b9e517d242da.ctex"
+
+[sub_resource type="Resource" id="Resource_g25s6"]
+script = ExtResource("4_coqgv")
+power = 20
+speed = 5.0
+texture = SubResource("CompressedTexture2D_dwwyj")
+metadata/_custom_type_script = "uid://rtfomaj3ijyt"
+
+[node name="Room2" type="Node2D" unique_id=141071005]
 z_index = -1
 
 [node name="PlayerSpawnPosition" type="Marker2D" parent="." unique_id=82701002]
@@ -33,27 +44,37 @@ tile_set = ExtResource("1_msc04")
 
 [node name="Exit" type="TileMapLayer" parent="." unique_id=406097067]
 use_parent_material = true
-tile_map_data = PackedByteArray("AAAIAAAAAgAGAAYAAAAHAAAAAgAFAAYAAAAHAAEAAgAFAAcAAAAIAAEAAgAGAAcAAAAHAAIAAgAFAAgAAAAIAAIAAgAGAAgAAAAOAAUAAAAHAAQAAAAOAAYAAAAHAAUAAAAOAAkAAAAHAAUAAAAOAAgAAAAHAAQAAAAOAAsAAAAHAAQAAAAOAAwAAAAHAAUAAAAOAA8AAAAGAAUAAFAOAA4AAAAFAAUAAFAOAA0AAAAGAAIAAAAOAAoAAAAGAAIAAAAOAAcAAAAGAAIAAAANAAoAAAAGAAAAAAANAAwAAAAFAAMAAAANABAAAAAFAAMAAAAIAA0AAAAFAAEAAAAIAAwAAAAFAAAAAAAGAAoAAAAFAAAAAAAGAAsAAAAFAAEAAAAJAAgAAAAFAAEAAAAJAAcAAAAFAAAAAAAGAAUAAAAFAAEAAAAGAAQAAAAFAAAAAAAIAAMAAAAFAAEAAAAHAAMAAAAGAAAAAAA=")
+tile_map_data = PackedByteArray("AAAOAAUAAAAHAAQAAAAOAAYAAAAHAAUAAAAOAAkAAAAHAAUAAAAOAAgAAAAHAAQAAAAOAAsAAAAHAAQAAAAOAAwAAAAHAAUAAAAOAA8AAAAGAAUAAFAOAA4AAAAFAAUAAFAOAA0AAAAGAAIAAAAOAAoAAAAGAAIAAAAOAAcAAAAGAAIAAAANAAoAAAAGAAAAAAANAAwAAAAFAAMAAAANABAAAAAFAAMAAAAIAA0AAAAFAAEAAAAIAAwAAAAFAAAAAAAGAAoAAAAFAAAAAAAGAAsAAAAFAAEAAAAJAAgAAAAFAAEAAAAJAAcAAAAFAAAAAAAGAAUAAAAFAAEAAAAGAAQAAAAFAAAAAAAIAAMAAAAFAAEAAAAHAAMAAAAGAAAAAAALAAAAAgAFAAYAAAALAAEAAgAFAAcAAAALAAIAAgAFAAgAAAAMAAAAAgAGAAYAAAAMAAEAAgAGAAcAAAAMAAIAAgAGAAgAAAA=")
 tile_set = ExtResource("1_msc04")
 
 [node name="HealPotion" parent="." unique_id=98250702 instance=ExtResource("2_jroud")]
 position = Vector2(32, 64)
 
+[node name="EnemySpinning2" parent="." unique_id=1705415560 instance=ExtResource("6_vs1ei")]
+position = Vector2(67, 142)
+max_hp = 60
+
+[node name="EnemySpinning3" parent="." unique_id=1092351491 instance=ExtResource("6_vs1ei")]
+position = Vector2(183, 159)
+max_hp = 60
+
 [node name="EnemyDirected" parent="." unique_id=972149547 instance=ExtResource("3_uup0a")]
-position = Vector2(190, 103)
-speed = 0.31
-circling_distance = 30
-max_swing = 3.282
-max_hp = 150
+position = Vector2(96, 77)
+speed = 0.3
+circling_speed = 1.4
+circling_distance = 75
+max_swing = 90.0
+max_hp = 90
 is_invertable = true
+sword_item = SubResource("Resource_vs1ei")
 
-[node name="EnemyDirected2" parent="." unique_id=1002692133 instance=ExtResource("3_uup0a")]
-position = Vector2(61, 99)
+[node name="EnemyDirected2" parent="." unique_id=794154560 instance=ExtResource("3_uup0a")]
+position = Vector2(170, 73)
+speed = 0.3
+circling_speed = 1.4
 circling_distance = 30
-max_swing = 2.392
-max_hp = 150
+flanking_mult = 3.0
+max_swing = 90.0
+max_hp = 90
 is_invertable = true
-sword_item = SubResource("Resource_dwwyj")
-
-[node name="EnemySpinning" parent="." unique_id=157792539 instance=ExtResource("6_vs1ei")]
-position = Vector2(126, 125)
+sword_item = SubResource("Resource_g25s6")

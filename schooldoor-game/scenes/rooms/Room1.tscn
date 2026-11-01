@@ -2,8 +2,17 @@
 
 [ext_resource type="TileSet" uid="uid://jb20uc7r0byd" path="res://tilesets/new_tile_set.tres" id="1_tfpoq"]
 [ext_resource type="PackedScene" uid="uid://doxgtb8uxlk6q" path="res://scenes/enemy_spinning.tscn" id="2_tfpoq"]
+[ext_resource type="Script" uid="uid://rtfomaj3ijyt" path="res://scripts/Item.gd" id="3_j0bqs"]
+[ext_resource type="Texture2D" uid="uid://mot1jrmr5hsc" path="res://sprites/Sword2.png" id="4_j0bqs"]
 
-[node name="Room1" type="Node2D" unique_id=141071005]
+[sub_resource type="Resource" id="Resource_nf2ix"]
+script = ExtResource("3_j0bqs")
+power = 15
+length = 35
+texture = ExtResource("4_j0bqs")
+metadata/_custom_type_script = "uid://rtfomaj3ijyt"
+
+[node name="Room2" type="Node2D" unique_id=141071005]
 z_index = -1
 
 [node name="PlayerSpawnPosition" type="Marker2D" parent="." unique_id=82701002]
@@ -26,9 +35,33 @@ tile_set = ExtResource("1_tfpoq")
 
 [node name="EnemySpinning" parent="." unique_id=972149547 instance=ExtResource("2_tfpoq")]
 position = Vector2(63, 92)
+speed = 0.4
+circling_distance = 50
+flanking_mult = 2.5
+max_hp = 30
 
 [node name="EnemySpinning2" parent="." unique_id=2091428662 instance=ExtResource("2_tfpoq")]
 position = Vector2(186, 84)
+speed = 0.4
+circling_distance = 50
+flanking_mult = 2.5
+max_hp = 30
 
 [node name="EnemySpinning3" parent="." unique_id=1251221542 instance=ExtResource("2_tfpoq")]
 position = Vector2(123, 189)
+circling_distance = 34
+sword_item = SubResource("Resource_nf2ix")
+
+[node name="EnemySpinning4" parent="." unique_id=1791006078 instance=ExtResource("2_tfpoq")]
+position = Vector2(21, 60)
+speed = 0.4
+circling_distance = 50
+flanking_mult = 2.5
+max_hp = 30
+
+[node name="EnemySpinning5" parent="." unique_id=475986589 instance=ExtResource("2_tfpoq")]
+position = Vector2(236, 57)
+speed = 0.4
+circling_distance = 50
+flanking_mult = 2.5
+max_hp = 30
