@@ -2,6 +2,8 @@
 
 [ext_resource type="TileSet" uid="uid://jb20uc7r0byd" path="res://tilesets/new_tile_set.tres" id="1_h0rbl"]
 [ext_resource type="Texture2D" uid="uid://b1fmrg51btmgs" path="res://sprites/room_tileset.png" id="2_mi01s"]
+[ext_resource type="PackedScene" uid="uid://q6i3tpkhe71y" path="res://scenes/bob.tscn" id="3_mi01s"]
+[ext_resource type="PackedScene" uid="uid://ckggwh6ev2v3y" path="res://scenes/player.tscn" id="4_ldqvh"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vplxy"]
 resource_name = "ф"
@@ -113,3 +115,10 @@ tile_set = ExtResource("1_h0rbl")
 use_parent_material = true
 tile_map_data = PackedByteArray("AAAPAA0AAAAFAAMAAAANAA8AAAAFAAMAAAAJABQAAAAFAAQAAAANABIAAAAFAAQAAAALABIAAAAGAAEAAAAUAAcAAAAGAAEAAAA=")
 tile_set = SubResource("TileSet_eud5g")
+
+[node name="Bob" parent="." unique_id=972149547 instance=ExtResource("3_mi01s")]
+position = Vector2(187, 149)
+collision_mask = 2
+
+[node name="Player" parent="." unique_id=1578707594 instance=ExtResource("4_ldqvh")]
+position = Vector2(191, 365)
