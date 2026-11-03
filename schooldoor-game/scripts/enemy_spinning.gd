@@ -73,11 +73,15 @@ func take_damage(amount):
 
 func _ready():
 	hp = max_hp
-	if sword_item: sword.get_child(0).texture = sword_item.texture
+	if sword_item: 
+		sword.get_child(0).texture = sword_item.texture
+		sword.get_child(1).scale.x *= sword_item.length / 16.0
+		for ch in sword.get_children(): ch.position.x += (sword_item.length - 16.0) / 2
+	
+	
 	if max_swing != 0.0:
 		var playerDir = (player.global_position - global_position)
 		sword.look_at(playerDir)
-
 func create_orbit():
 	if player_orbit != null && bobber != null: return
 	player_orbit = Node2D.new()
@@ -152,3 +156,5 @@ func _process(delta):
 func _on_sword_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		body.take_damage(sword_item.power)
+		
+		

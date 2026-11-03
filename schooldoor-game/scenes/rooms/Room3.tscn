@@ -14,7 +14,7 @@ speed = 7.0
 texture = SubResource("CompressedTexture2D_nenaj")
 metadata/_custom_type_script = "uid://rtfomaj3ijyt"
 
-[node name="Room2" type="Node2D" unique_id=141071005]
+[node name="Room3" type="Node2D" unique_id=141071005]
 z_index = -1
 
 [node name="PlayerSpawnPosition" type="Marker2D" parent="." unique_id=82701002]
