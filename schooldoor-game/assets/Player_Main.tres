@@ -5,6 +5,5 @@
 
 [resource]
 script = ExtResource("1_iexyd")
-power = 30
 texture = ExtResource("2_sxppn")
 metadata/_custom_type_script = "uid://rtfomaj3ijyt"

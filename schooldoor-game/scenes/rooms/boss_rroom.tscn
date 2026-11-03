@@ -118,3 +118,5 @@ tile_set = SubResource("TileSet_eud5g")
 [node name="Bob" parent="." unique_id=972149547 instance=ExtResource("3_mi01s")]
 position = Vector2(187, 149)
 collision_mask = 2
+speed = 0.84
+flanking_mult = 1.5

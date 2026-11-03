@@ -102,12 +102,11 @@ animations = [{
 radius = 25.999844
 height = 64.00658
 
-[node name="Bob" type="CharacterBody2D" unique_id=972149547 groups=["enemies"]]
+[node name="Bob" type="CharacterBody2D" unique_id=972149547 groups=["boss", "enemies"]]
 z_index = 2
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("1_wpjem")
-speed = 0.95
 circling_speed = 1.0
 circling_distance = 140
 flanking_mult = 2.5

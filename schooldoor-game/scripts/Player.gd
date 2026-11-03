@@ -35,6 +35,8 @@ var blood_particles_high = preload("res://scenes/particles/lethal_hit_blood_clow
 
 var pause_scene = preload("res://scenes/ui/pause_menu.tscn")
 
+var flash_tween : Tween
+
 var input: Vector2
 
 func _ready():
@@ -54,12 +56,12 @@ func update_hp_bar():
 	$CanvasLayer/HPBar.value = hp
 
 func flash_anim(col = Color(7.759, 7.759, 7.759, 1.0), time = 0.16):
-	var tween = get_tree().create_tween()
-	tween.tween_property(player_sprite, "modulate", col, time)
-	tween.play()
-	await tween.finished; tween.kill(); tween = create_tween()
-	tween.tween_property(player_sprite, "modulate", Color("ffffffff"), time)
-	tween.play()
+	if flash_tween && flash_tween.is_running():
+		flash_tween.kill()
+	
+	flash_tween = create_tween()
+	flash_tween.tween_property(player_sprite, "modulate", col, time)
+	flash_tween.tween_property(player_sprite, "modulate", Color("ffffffff"), time)
 
 func die():
 	get_tree().change_scene_to_file("res://scenes/ui/death_screen.tscn")
@@ -117,9 +119,6 @@ func face_input(p_input):
 				-1: 
 					player_sprite.texture = preload("res://sprites/Player/Player_Back.png")
 
-func resume():
-	get_tree().paused = false
-
 func pause():
 	get_tree().paused = true
 	var pause_menu = pause_scene.instantiate()
@@ -147,15 +146,11 @@ func refresh_drops():
 		3: for drop in drops: drop.texture = full_drop
 		_: for drop in drops: drop.texture = full_drop
 
-func _process(delta):
+func _physics_process(delta: float) -> void:
 	var player_input = get_input()
 	face_input(player_input)
 	refresh_drops()
 	
-	if Input.is_action_just_pressed("pause") && get_tree().paused:
-		resume()
-	elif Input.is_action_just_pressed("pause"):
-		pause()
 	# DASHING
 	if is_dashing:
 		velocity = lerp(velocity, dash_dir * speed * 5, accelration * delta)
@@ -172,6 +167,10 @@ func _process(delta):
 		audio_steps.play()
 	elif player_input == Vector2.ZERO && !is_dashing:
 		audio_steps.stop()
+
+func _process(delta):
+	if Input.is_action_just_pressed("pause"):
+		pause()
 	
 	# SWORD
 	var direction = global_position.direction_to(get_global_mouse_position())
@@ -180,36 +179,41 @@ func _process(delta):
 
 
 func _on_sword_area_entered(area: Area2D) -> void:
+	if !is_instance_valid(sword_item): return
+	
 	if area.is_in_group("e_weapons"):
 		var enemy = area.get_parent().get_parent()
 		if enemy.is_invertable: enemy.inverted_spinning = not enemy.inverted_spinning
 		#if enemy.max_swing != 0.0 && enemy.max_swing - abs(enemy.sword.rotation) <= PI / 20: enemy.stun_sword(0.34)
 		audio_clashes.stream = clash_sound
 		audio_clashes.play()
-		var sparks = clash_particles.instantiate()
+		#Display particles
+		var sparks = clash_particles.instantiate() as CPUParticles2D
+		sparks.one_shot = true
+		sparks.emitting = false
+		sparks.local_coords = false
 		get_parent().add_child(sparks)
-		sparks.global_position = (sword.global_position + area.global_position) / 2
-		sparks.emitting = true
+		sparks.global_position = global_position
+		sparks.finished.connect(sparks.queue_free)
+		await get_tree().process_frame
+		sparks.restart()
 
 
 func _on_sword_body_entered(body: Node2D) -> void:
-	if body.is_in_group("enemies") && body.accelration != 20.11:
+	if !is_instance_valid(sword_item): return
+	if body.is_in_group("enemies") && !body.is_in_group("boss"):
 		body.take_damage(sword_item.power)
 		drop_count += 1
-	elif !body.is_in_group("enemies"): return
-	elif body.accelration != 20.11: return
-	elif body.is_in_group("enemies") && !body.attacking || body.is_in_group("enemies") && is_dashing:
+	elif body.is_in_group("boss") && !body.attacking || body.is_in_group("boss") && is_dashing:
 		body.take_damage(sword_item.power)
 		drop_count += 1
-	elif body.is_in_group("enemies"):
+	elif body.is_in_group("boss"):
 		drop_count += 1
 
 
 func _on_sword_body_exited(body: Node2D) -> void:
-	if !body.is_in_group("enemies"): return
-	elif body.accelration != 20.11: return
-	elif body.is_in_group("enemies") && !body.attacking || body.is_in_group("enemies") && is_dashing:
-		body.take_damage(sword_item.power)
-		drop_count += 1
-	elif body.is_in_group("enemies"):
-		drop_count += 1
+	if !is_instance_valid(sword_item): return
+	if body.is_in_group("boss"):
+		if !body.attacking || is_dashing:
+			body.take_damage(sword_item.power)
+			drop_count += 1

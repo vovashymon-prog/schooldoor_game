@@ -28,3 +28,5 @@ scale_amount_max = 10.0
 scale_amount_curve = SubResource("Curve_8vrlf")
 color = Color(0.6039216, 0.5882353, 0.6666667, 1)
 color_ramp = SubResource("Gradient_85fsr")
+
+[connection signal="finished" from="." to="." method="_on_finished"]

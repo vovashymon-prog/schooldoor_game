@@ -3,11 +3,6 @@
 [ext_resource type="Script" uid="uid://240f1ie10b5n" path="res://scripts/room_progression.gd" id="1_0bbpv"]
 [ext_resource type="PackedScene" uid="uid://ckggwh6ev2v3y" path="res://scenes/player.tscn" id="2_rvslj"]
 [ext_resource type="PackedScene" uid="uid://dy6cll7qhh3t1" path="res://scenes/rooms/Room3.tscn" id="3_0bbpv"]
-[ext_resource type="PackedScene" uid="uid://df7ny55yimtmr" path="res://scenes/rooms/Room1.tscn" id="3_jlsqs"]
-[ext_resource type="PackedScene" uid="uid://b0hwx03oakmjo" path="res://scenes/rooms/Room2.tscn" id="4_q8u5g"]
-[ext_resource type="PackedScene" uid="uid://7yilt34c765d" path="res://scenes/rooms/Room4.tscn" id="5_lhr70"]
-[ext_resource type="PackedScene" uid="uid://b6ihi16bq0bab" path="res://scenes/rooms/Room5.tscn" id="6_wp0k4"]
-[ext_resource type="PackedScene" uid="uid://b01p3q4kkn1u5" path="res://scenes/rooms/boss_rroom.tscn" id="7_bjd11"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1wlia"]
 size = Vector2(32, 20)
@@ -15,7 +10,6 @@ size = Vector2(32, 20)
 [node name="Main" type="Node2D" unique_id=1201342250 groups=["main"]]
 script = ExtResource("1_0bbpv")
 enemy_per_room = [1, 5, 1, 2, 4, 1]
-rooms = [ExtResource("3_0bbpv"), ExtResource("3_jlsqs"), ExtResource("4_q8u5g"), ExtResource("5_lhr70"), ExtResource("6_wp0k4"), ExtResource("7_bjd11")]
 
 [node name="Player" parent="." unique_id=972149547 instance=ExtResource("2_rvslj")]
 position = Vector2(128, 154)

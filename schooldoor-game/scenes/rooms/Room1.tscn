@@ -35,14 +35,12 @@ tile_set = ExtResource("1_tfpoq")
 
 [node name="EnemySpinning" parent="." unique_id=972149547 instance=ExtResource("2_tfpoq")]
 position = Vector2(63, 92)
-speed = 0.4
 circling_distance = 50
 flanking_mult = 2.5
 max_hp = 30
 
 [node name="EnemySpinning2" parent="." unique_id=2091428662 instance=ExtResource("2_tfpoq")]
 position = Vector2(186, 84)
-speed = 0.4
 circling_distance = 50
 flanking_mult = 2.5
 max_hp = 30
@@ -54,14 +52,12 @@ sword_item = SubResource("Resource_nf2ix")
 
 [node name="EnemySpinning4" parent="." unique_id=1791006078 instance=ExtResource("2_tfpoq")]
 position = Vector2(21, 60)
-speed = 0.4
 circling_distance = 50
 flanking_mult = 2.5
 max_hp = 30
 
 [node name="EnemySpinning5" parent="." unique_id=475986589 instance=ExtResource("2_tfpoq")]
 position = Vector2(236, 57)
-speed = 0.4
 circling_distance = 50
 flanking_mult = 2.5
 max_hp = 30

@@ -6,6 +6,7 @@ extends Node2D
 	preload("res://scenes/rooms/Room1.tscn"), 
 	preload("res://scenes/rooms/Room2.tscn"), 
 	preload("res://scenes/rooms/Room4.tscn"), 
+	preload("res://scenes/rooms/Room5.tscn"), 
 	preload("res://scenes/rooms/boss_rroom.tscn")
 ]
 var enemies_killed := 0
@@ -40,10 +41,10 @@ func change_scene():
 	current_room_asset.global_position = Vector2.ZERO
 	player.global_position = current_room_asset.get_child(0).global_position
 	
-	if current_room == 4: 
+	if current_room == rooms.size()-1: 
 		$Transitions.position.x += 48
 
-	if current_room == 5:
+	if current_room == rooms.size():
 		MusicManager.play_boss()
 	else:
 		MusicManager.play_room()
