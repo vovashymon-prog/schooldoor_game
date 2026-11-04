@@ -11,6 +11,8 @@
 [ext_resource type="Texture2D" uid="uid://cptjc7hetfmt3" path="res://sprites/Bob/8.png" id="9_tlgew"]
 [ext_resource type="Texture2D" uid="uid://dg616iptaab6x" path="res://sprites/Bob/1.png" id="10_i1vwh"]
 [ext_resource type="Texture2D" uid="uid://desbpqmprb4fb" path="res://sprites/Player/Shadow_png.png" id="11_026v1"]
+[ext_resource type="PackedScene" uid="uid://pp45n41wpkyt" path="res://scenes/components/health_component.tscn" id="12_51f71"]
+[ext_resource type="PackedScene" uid="uid://ctvquutvmck3v" path="res://scenes/components/orbit_component.tscn" id="13_21558"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_1wlia"]
 animations = [{
@@ -107,10 +109,7 @@ z_index = 2
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("1_wpjem")
-circling_speed = 1.0
-circling_distance = 140
 flanking_mult = 2.5
-max_hp = 1000
 
 [node name="Audio" type="AudioStreamPlayer2D" parent="." unique_id=1157805459]
 position = Vector2(2, -6)
@@ -142,6 +141,12 @@ position = Vector2(2.3841858e-07, 3)
 rotation = 1.574276
 scale = Vector2(0.99999994, 0.99999994)
 shape = SubResource("CapsuleShape2D_ldqvh")
+
+[node name="HealthComponent" parent="." unique_id=81352400 instance=ExtResource("12_51f71")]
+max_hp = 1000
+
+[node name="OrbitComponent" parent="." unique_id=1682502804 instance=ExtResource("13_21558")]
+orbiting_distance = 100.0
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

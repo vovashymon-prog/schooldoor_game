@@ -42,6 +42,5 @@ tile_set = ExtResource("1_vplxy")
 
 [node name="EnemySpinning" parent="." unique_id=972149547 instance=ExtResource("2_vplxy")]
 position = Vector2(128, 68)
-circling_distance = 50
-max_hp = 60
+flanking_mult = 2.0
 sword_item = SubResource("Resource_wvhnu")

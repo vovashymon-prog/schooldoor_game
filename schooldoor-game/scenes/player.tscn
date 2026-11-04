@@ -3,9 +3,48 @@
 [ext_resource type="Script" uid="uid://cii8qr27bvlqc" path="res://scripts/Player.gd" id="1_qhqgy"]
 [ext_resource type="Resource" uid="uid://2xmnyofmd8vb" path="res://assets/Player_Main.tres" id="2_qlg0r"]
 [ext_resource type="Texture2D" uid="uid://j01egnrq2abm" path="res://sprites/Player/Player_Front.png" id="3_qhqgy"]
+[ext_resource type="Texture2D" uid="uid://hyh0kvtsgol1" path="res://sprites/Player/Player_Dying.png" id="3_y4r1p"]
 [ext_resource type="Texture2D" uid="uid://d2gfb2iq8pp1b" path="res://sprites/HP_Bar.png" id="4_dqkch"]
 [ext_resource type="Texture2D" uid="uid://desbpqmprb4fb" path="res://sprites/Player/Shadow_png.png" id="4_tuyoq"]
+[ext_resource type="Texture2D" uid="uid://e8cl08k4kw88" path="res://sprites/Player/Player_Profile.png" id="5_d2wvv"]
 [ext_resource type="Texture2D" uid="uid://cfnwdx0dvsf5j" path="res://sprites/Blood_drop.png" id="5_qlg0r"]
+[ext_resource type="Texture2D" uid="uid://w58drhexky83" path="res://sprites/Player/Player_Back.png" id="6_3v2ag"]
+[ext_resource type="PackedScene" uid="uid://pp45n41wpkyt" path="res://scenes/components/health_component.tscn" id="7_fjrip"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tuyoq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_y4r1p")
+}],
+"loop": 1,
+"name": &"Dead",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_qhqgy")
+}],
+"loop": 1,
+"name": &"Down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_d2wvv")
+}],
+"loop": 1,
+"name": &"Side",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_3v2ag")
+}],
+"loop": 1,
+"name": &"Up",
+"speed": 5.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1wlia"]
 size = Vector2(12, 18)
@@ -48,10 +87,12 @@ zoom = Vector2(3, 3)
 position_smoothing_enabled = true
 position_smoothing_speed = 10.0
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2106482395]
-texture = ExtResource("3_qhqgy")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=998843705]
+sprite_frames = SubResource("SpriteFrames_tuyoq")
+animation = &"Down"
+autoplay = "Down"
 
-[node name="Shadow" type="Sprite2D" parent="Sprite2D" unique_id=609347796]
+[node name="Shadow" type="Sprite2D" parent="AnimatedSprite2D" unique_id=609347796]
 z_index = 1
 position = Vector2(0, 10)
 scale = Vector2(0.02, 0.03)
@@ -121,6 +162,8 @@ offset_top = 28.0
 offset_right = 101.0
 offset_bottom = 60.0
 texture = ExtResource("5_qlg0r")
+
+[node name="HealthComponent" parent="." unique_id=81352400 instance=ExtResource("7_fjrip")]
 
 [connection signal="area_entered" from="sword" to="." method="_on_sword_area_entered"]
 [connection signal="body_entered" from="sword" to="." method="_on_sword_body_entered"]

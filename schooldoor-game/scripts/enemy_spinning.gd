@@ -1,17 +1,18 @@
+class_name Enemy
 extends CharacterBody2D
 
-@export var speed = 0.17
-@export var accelration = 20.0
-@export var circling_speed = PI / 6
-@export var circling_distance = 30
-@export var flanking_mult = 3.0
-@export var max_swing = 0.0
-@export var max_hp := 100
-var hp := 100
+@export var speed := 40
+@export var acceleration := 2000.0
+@export var flanking_mult := 2.0
+@export var max_swing := 0.0
 var inverted_spinning := false
-var is_invul := false
 var is_sword_stunned := false
+var turned_recently := false
 @export var is_invertable := true
+
+@onready var health_component : HealthComponent = $HealthComponent
+@onready var orbit_component : OrbitComponent = $OrbitComponent
+@onready var player : Player = get_tree().get_first_node_in_group("player")
 
 @export var sword_item: Item
 @onready var sprite = $Sprite2D
@@ -20,7 +21,6 @@ var is_sword_stunned := false
 @onready var audio = $Audio
 var player_orbit
 var bobber
-@onready var player = get_tree().get_first_node_in_group("player")
 var clash_sound = preload("res://audio/Sword/ThoSwordsHit_1.wav")
 var hit_sound = preload("res://audio/Sword/FleshHit.wav")
 var critical_sound = preload("res://audio/Sword/Critical hit.wav")
@@ -32,26 +32,27 @@ var blood_particles_high = preload("res://scenes/particles/lethal_hit_blood_clow
 
 var input: Vector2
 
-func process_invul(duration := 0.33):
-	is_invul = true
-	await get_tree().create_timer(duration).timeout
-	if not is_instance_valid(self): return
-	is_invul = false
+signal defeated
+
+func on_damaged(_amount: int):
+	spawn_particles(blood_particles_low)
+	take_damage_anim()
+func on_died():
+	spawn_particles(blood_particles_high)
+	die()
 
 func spawn_particles(scene: PackedScene) -> void:
 	var blood = scene.instantiate() as CPUParticles2D
-	
-	blood.one_shot = true
-	blood.emitting = false
-	blood.local_coords = false
-	
 	get_parent().add_child(blood)
 	blood.global_position = global_position
-	
-	blood.finished.connect(blood.queue_free)
-	
-	await get_tree().process_frame
-	blood.restart()
+
+func take_damage(amount):
+	if is_instance_valid(health_component):
+		health_component.take_damage(amount)
+	# SOUND BELOW IS A TEMPORARY DECISION
+	if is_instance_valid(player):
+		player.audio_hits.stream = player.hit_sound
+		player.audio_hits.play()
 
 func take_damage_anim():
 	if damage_tween && damage_tween.is_running():
@@ -62,56 +63,30 @@ func take_damage_anim():
 	damage_tween.tween_property(sprite, "modulate", Color("ffffffff"), 0.16)
 
 func die():
-	if is_instance_valid(player): 
-		player.audio_hits.stream = critical_sound
-		player.audio_hits.play()
-		player.drop_count += 1
-		spawn_particles(blood_particles_high)
-		var main = get_tree().get_first_node_in_group("main")
-		if main != null: main.enemies_killed += 1
-		clear_orbit()
-		queue_free()
-
-func take_damage(amount, duration := 0.33):
-	if !is_invul:
-		hp -= amount
-		take_damage_anim()
-		print(hp)
-		process_invul(duration)
-		if hp <= 0:
-			hp = 0
-			die()
-		else:
-			if is_instance_valid(player): 
-				player.audio_hits.stream = hit_sound
-				player.audio_hits.play()
-			spawn_particles(blood_particles_low)
+	#TEMP PART START
+	var main = get_tree().get_first_node_in_group("main")
+	if main != null: main.enemies_killed += 1
+	#TEMP PART END
+	defeated.emit()
+	queue_free()
 
 func _ready():
-	hp = max_hp
+	if is_instance_valid(health_component):
+		health_component.damaged.connect(on_damaged)
+		health_component.died.connect(on_died)
+	if is_instance_valid(orbit_component):
+		#The direction is randomized with default -1 mult
+		if randf() > 0.5:
+			orbit_component.multiply_spinning_speed()
 	if sword_item: 
 		sword.get_child(0).texture = sword_item.texture
 		sword.get_child(1).scale.x *= sword_item.length / 16.0
 		for ch in sword.get_children(): ch.position.x += (sword_item.length - 16.0) / 2
 	
-	
-	if max_swing != 0.0:
-		if is_instance_valid(player): 
-			var playerDir = (player.global_position - global_position)
-			sword.look_at(playerDir)
-func create_orbit():
-	if player_orbit != null && bobber != null || !is_instance_valid(player): return
-	player_orbit = Node2D.new()
-	bobber = Node2D.new()
-	player_orbit.add_child(bobber)
-	player.add_child(player_orbit)
-	player_orbit.position = Vector2.ZERO
-	bobber.position = Vector2(circling_distance - 5.5, 0)
-
-func clear_orbit():
-	if player_orbit != null: player_orbit.queue_free()
-	player_orbit = null
-	bobber = null
+	if is_instance_valid(player):
+		player.connect_enemy(self)
+		if max_swing != 0.0:
+			sword.look_at(player.global_position)
 
 func stun_sword(time = 0.33):
 	is_sword_stunned = true
@@ -122,20 +97,32 @@ func stun_sword(time = 0.33):
 func _physics_process(delta: float) -> void:
 	# WALKING
 	if !is_instance_valid(player): return
+	if !is_instance_valid(orbit_component):
+		print("Error, please add orbit components to all enemies")
+		return
 	var direction = (player.global_position - global_position).normalized()
-	if direction.length() > circling_distance:
-		velocity = lerp(velocity, direction * speed, accelration * delta)
+	var player_dist = global_position.distance_to(player.global_position)
+	if player_dist - 10.0 > orbit_component.orbiting_distance:
+		orbit_component.deactivate()
+		velocity = velocity.move_toward(direction * speed, acceleration * delta * 10)
 		move_and_slide()
-		clear_orbit()
+		face_direction(direction)
 	else:
-		create_orbit()
-		player_orbit.rotation += circling_speed * delta
-		direction = bobber.global_position - global_position
-		velocity = lerp(velocity, direction * speed * flanking_mult, clamp((accelration * delta * 10), 0.0, 1.0))
+		orbit_component.activate()
+		var orbit_direction = (orbit_component.get_player_position() - global_position).normalized()
+		velocity = velocity.move_toward(orbit_direction * speed * flanking_mult, acceleration * delta * 10)
 		move_and_slide()
-	face_direction(direction)
+		face_direction(orbit_direction)
+
+func process_turn():
+	turned_recently = true
+	await get_tree().create_timer(0.1).timeout
+	if !is_instance_valid(self): return
+	turned_recently = false
 
 func face_direction(direction):
+	if turned_recently: return
+	process_turn()
 	match int(sign(direction.x)):
 		1:
 			sprite.scale.x = 1
@@ -154,16 +141,15 @@ func face_direction(direction):
 
 func _process(delta):
 	# SWORD
-	if !is_instance_valid(player): return
-	if is_sword_stunned: return
+	if !is_instance_valid(player) || !is_instance_valid(sword_item) || is_sword_stunned: return
 	if max_swing == 0:
-		if sword_item && !inverted_spinning: sword.rotation += -sword_item.speed * delta
-		elif sword_item && inverted_spinning: sword.rotation += sword_item.speed * delta
+		if !inverted_spinning: sword.rotation += sword_item.speed * delta
+		elif inverted_spinning: sword.rotation += -sword_item.speed * delta
 	else:
 		var playerDir = (player.global_position - global_position)
 		var playerAngle = playerDir.angle()
 		var old_axis_rot = axis.rotation
-		axis.rotation = rotate_toward(axis.rotation, playerAngle, sword_item.speed)
+		axis.rotation = rotate_toward(axis.rotation, playerAngle, sword_item.speed * delta)
 		var axis_delta = axis.rotation - old_axis_rot
 		sword.rotation -= axis_delta
 		if abs(sword.rotation) >= max_swing + PI / 18: 
@@ -173,6 +159,7 @@ func _process(delta):
 		elif sword_item && inverted_spinning: sword.rotation += sword_item.speed * delta
 
 func _on_sword_body_entered(body: Node2D) -> void:
+	if !is_instance_valid(sword_item): return
 	if body.is_in_group("player"):
 		body.take_damage(sword_item.power)
 		

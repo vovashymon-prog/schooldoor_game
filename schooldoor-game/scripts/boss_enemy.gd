@@ -1,25 +1,23 @@
 extends CharacterBody2D
 
-@export var speed = 0.28
-@export var accelration = 20
-@export var damage = 25
-@export var circling_speed = PI / 6
-@export var circling_distance = 100
-@export var flanking_mult = 2.0
-@export var max_hp := 500
-var hp := 500
+@export var speed := 25
+@export var acceleration := 20
+@export var damage := 25
+@export var flanking_mult := 2.0
 var attacking := false
 var player_in := false
 var inverted_flanking := false
 var processing_inversion := false
 var processing_state := false
-var is_invul := false
+
+@onready var health_component : HealthComponent = $HealthComponent
+@onready var orbit_component : OrbitComponent = $OrbitComponent
+@onready var player : Player = get_tree().get_first_node_in_group("player")
 
 @onready var sprite = $Area2D/AnimatedSprite2D
 @onready var audio = $Audio
 var player_orbit
 var bobber
-@onready var player = get_tree().get_first_node_in_group("player")
 var clash_sound = preload("res://audio/Sword/ThoSwordsHit_1.wav")
 var hit_sound = preload("res://audio/Sword/FleshHit.wav")
 var critical_sound = preload("res://audio/Sword/Critical hit.wav")
@@ -31,11 +29,32 @@ var blood_particles_high = preload("res://scenes/particles/lethal_hit_blood_clow
 
 var input: Vector2
 
-func process_invul(duration := 0.33):
-	is_invul = true
-	await get_tree().create_timer(duration).timeout
-	if not is_instance_valid(self): return
-	is_invul = false
+signal defeated
+
+# The boss is still a work in progress, the mechanics that are already
+# implemented are here to stay, but more will be added
+
+func on_damaged(_amount: int):
+	spawn_particles(blood_particles_low)
+	take_damage_anim()
+func on_died():
+	spawn_particles(blood_particles_high)
+	die()
+
+func spawn_particles(scene: PackedScene) -> void:
+	var blood = scene.instantiate() as CPUParticles2D
+	get_parent().add_child(blood)
+	blood.global_position = global_position
+
+func take_damage(amount):
+	if is_instance_valid(health_component):
+		if !attacking || is_instance_valid(player) && player.is_dashing:
+			health_component.take_damage(amount)
+	# SOUND BELOW IS A TEMPORARY DECISION
+	if is_instance_valid(player):
+		if !attacking || player.is_dashing:
+			player.audio_hits.stream = player.hit_sound
+			player.audio_hits.play()
 
 func take_damage_anim():
 	if damage_tween && damage_tween.is_running():
@@ -45,89 +64,47 @@ func take_damage_anim():
 	damage_tween.tween_property(sprite, "modulate", Color(7.759, 7.759, 7.759, 1.0), 0.16)
 	damage_tween.tween_property(sprite, "modulate", Color("ffffffff"), 0.16)
 
-func spawn_particles(scene: PackedScene) -> void:
-	var blood = scene.instantiate() as CPUParticles2D
-	
-	blood.one_shot = true
-	blood.emitting = false
-	blood.local_coords = false
-	
-	get_parent().add_child(blood)
-	blood.global_position = global_position
-	
-	blood.finished.connect(blood.queue_free)
-	
-	await get_tree().process_frame
-	blood.restart()
-
 func die():
-	if is_instance_valid(player): 
-		player.dash_power = 1.0
-		player.audio_hits.stream = critical_sound
-		player.audio_hits.play()
-		player.drop_count += 1
-		spawn_particles(blood_particles_high)
-		var main = get_tree().get_first_node_in_group("main")
-		if main != null: main.enemies_killed += 1
-		clear_orbit()
-		queue_free()
-
-func take_damage(amount, duration = 0.33):
-	if !is_invul:
-		hp -= amount
-		take_damage_anim()
-		print(hp)
-		process_invul(duration)
-		if hp <= 0:
-			hp = 0
-			die()
-		else:
-			if is_instance_valid(player): 
-				player.audio_hits.stream = hit_sound
-				player.audio_hits.play()
-			spawn_particles(blood_particles_low)
+	#TEMP PART START
+	var main = get_tree().get_first_node_in_group("main")
+	if main != null: main.enemies_killed += 1
+	#TEMP PART END
+	defeated.emit()
+	queue_free()
 
 func _ready():
-	hp = max_hp
-	if is_instance_valid(player): player.dash_power = 1.15
-
-func create_orbit():
-	if player_orbit != null && bobber != null: return
-	player_orbit = Node2D.new()
-	bobber = Node2D.new()
-	player_orbit.add_child(bobber)
-	if is_instance_valid(player): player.add_child(player_orbit)
-	player_orbit.position = Vector2.ZERO
-	bobber.position = Vector2(circling_distance - 5.5, 0)
-
-func clear_orbit():
-	if player_orbit != null: player_orbit.queue_free()
-	player_orbit = null
-	bobber = null
+	if is_instance_valid(health_component):
+		health_component.damaged.connect(on_damaged)
+		health_component.died.connect(on_died)
+	if is_instance_valid(player): 
+		player.dash_power = 1.15
+		player.connect_enemy(self)
 
 func _physics_process(delta: float) -> void:
 	# WALKING
 	if !is_instance_valid(player): return
-	var direction = player.global_position - global_position
+	if !is_instance_valid(orbit_component):
+		print("Error, please add orbit components to all enemies")
+		return
+	var direction = (player.global_position - global_position).normalized()
 	if attacking:
-		velocity = lerp(velocity, direction * speed, clamp((accelration * delta * 10), 0.0, 1.0))
+		orbit_component.deactivate()
+		velocity = velocity.move_toward(direction * speed, acceleration * delta * 10)
 		move_and_slide()
-		clear_orbit()
 	else:
-		create_orbit()
-		player_orbit.rotation += circling_speed * delta
-		direction = bobber.global_position - global_position
-		velocity = lerp(velocity, direction * speed * flanking_mult, clamp((accelration * delta * 10), 0.0, 1.0))
-		move_and_slide()
+		orbit_component.activate()
+		var orbit_direction = (orbit_component.get_player_position() - global_position).normalized()
+		if orbit_direction != null:
+			velocity = velocity.move_toward(orbit_direction * speed * flanking_mult, acceleration * delta * 10)
+			move_and_slide()
 
 func process_inversion():
 	processing_inversion = true
 	await get_tree().create_timer(randf_range(2, 6)).timeout
 	if not is_instance_valid(self): return
-	circling_speed *= randf_range(-1.1, -0.9)
-	circling_distance *= randf_range(0.8, 1.2)
-	clear_orbit()
-	create_orbit()
+	if is_instance_valid(orbit_component):
+		orbit_component.multiply_spinning_speed(-0.9, -1.15)
+		orbit_component.multiply_orbiting_distance()
 	processing_inversion = false
 
 func process_state():

@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://ctvquutvmck3v"]
+
+[ext_resource type="Script" uid="uid://d161x05ul4k3j" path="res://scripts/orbit_component.gd" id="1_gxptk"]
+
+[node name="OrbitComponent" type="Node2D" unique_id=1682502804]
+script = ExtResource("1_gxptk")
+
+[node name="Orbit" type="Node2D" parent="." unique_id=2068356465]
+
+[node name="Bobber" type="Node2D" parent="Orbit" unique_id=989144442]
+position = Vector2(32, 0)

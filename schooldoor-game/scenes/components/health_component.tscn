@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://pp45n41wpkyt"]
+
+[ext_resource type="Script" uid="uid://brifnm0dw1xne" path="res://scripts/health_component.gd" id="1_2wcl1"]
+
+[node name="HealthComponent" type="Node2D" unique_id=81352400]
+script = ExtResource("1_2wcl1")
+
+[node name="Timer" type="Timer" parent="." unique_id=330685044]
+
+[connection signal="timeout" from="Timer" to="." method="_on_invul_timer_timeout"]

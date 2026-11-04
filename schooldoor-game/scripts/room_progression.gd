@@ -15,6 +15,9 @@ var current_room := 1
 @onready var player = get_tree().get_first_node_in_group("player")
 @onready var fade = $CanvasLayer/Fade
 
+#This script is a temporary decision and will be superceeded upon
+#the addition of procedural generation
+
 func _ready() -> void:
 	MusicManager.play_room()
 
@@ -39,6 +42,7 @@ func change_scene():
 	current_room += 1
 	add_child(current_room_asset)
 	current_room_asset.global_position = Vector2.ZERO
+	player.health_component.process_invul(0.1)
 	player.global_position = current_room_asset.get_child(0).global_position
 	
 	if current_room == rooms.size()-1: 

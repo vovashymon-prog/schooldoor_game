@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://c3ilj08e8dss2"]
 
+[ext_resource type="Script" uid="uid://df0djqxoh684b" path="res://scripts/particles.gd" id="1_fuh5u"]
+
 [sub_resource type="Curve" id="Curve_8vrlf"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
@@ -21,5 +23,6 @@ scale_amount_min = 8.0
 scale_amount_max = 10.0
 scale_amount_curve = SubResource("Curve_8vrlf")
 color = Color(0.5882353, 0.21176471, 0.22352941, 1)
+script = ExtResource("1_fuh5u")
 
 [connection signal="finished" from="." to="." method="_on_finished"]

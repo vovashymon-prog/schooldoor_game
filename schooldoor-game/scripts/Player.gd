@@ -1,19 +1,19 @@
+class_name Player
 extends CharacterBody2D
 
-@export var speed = 100
-@export var accelration = 20.0
-@export var max_hp := 100
+@export var speed := 100
+@export var acceleration := 20.0
 @export var dash_power := 1.0
 @export var dash_cd := 0.75
-var hp := 100
-var is_invul := false
 var can_dash := true
 var is_dashing := false
 var dash_dir
 
+@onready var health_component = $HealthComponent
+
 @export var sword_item: Item
 @onready var sword = $sword
-@onready var player_sprite = $Sprite2D
+@onready var player_sprite : AnimatedSprite2D = $AnimatedSprite2D
 @onready var audio_steps = $Audio_Steps
 @onready var audio_hits = $Audio_Hits
 @onready var audio_clashes = $Audio_Clashes
@@ -39,20 +39,48 @@ var flash_tween : Tween
 
 var input: Vector2
 
+func on_damaged(_amount: int):
+	spawn_particles(blood_particles_low)
+	flash_anim()
+func on_died():
+	spawn_particles(blood_particles_high)
+	die()
+
+func spawn_particles(scene: PackedScene) -> void:
+	var blood = scene.instantiate() as CPUParticles2D
+	get_parent().add_child(blood)
+	blood.global_position = global_position
+
+func heal(amount):
+	if is_instance_valid(health_component):
+		health_component.heal(amount)
+
+func take_damage(amount):
+	if is_instance_valid(health_component):
+		health_component.take_damage(amount)
+
 func _ready():
-	hp = max_hp
+	if is_instance_valid(health_component):
+		health_component.damaged.connect(on_damaged)
+		health_component.died.connect(on_died)
+		health_component.health_changed.connect(update_hp_bar)
+		update_hp_bar(health_component.hp)
 	if sword_item: 
 		sword.get_child(0).texture = sword_item.texture
 		sword.get_child(1).scale.x *= sword_item.length / 16.0
 		for ch in sword.get_children(): ch.position.x += (sword_item.length - 16.0) / 2
-	update_hp_bar()
 
-func process_invul(time = 0.33):
-	is_invul = true
-	await get_tree().create_timer(time).timeout
-	is_invul = false
+func connect_enemy(enemy : Node):
+	if enemy.has_signal("defeated"):
+		enemy.defeated.connect(on_enemy_defeated)
 
-func update_hp_bar():
+func on_enemy_defeated():
+	audio_hits.stream = critical_sound
+	audio_hits.play()
+	drop_count += 1
+	refresh_drops()
+
+func update_hp_bar(hp: int, _max_hp := 100):
 	$CanvasLayer/HPBar.value = hp
 
 func flash_anim(col = Color(7.759, 7.759, 7.759, 1.0), time = 0.16):
@@ -61,27 +89,11 @@ func flash_anim(col = Color(7.759, 7.759, 7.759, 1.0), time = 0.16):
 	
 	flash_tween = create_tween()
 	flash_tween.tween_property(player_sprite, "modulate", col, time)
+	if !is_instance_valid(self): return
 	flash_tween.tween_property(player_sprite, "modulate", Color("ffffffff"), time)
 
 func die():
 	get_tree().change_scene_to_file("res://scenes/ui/death_screen.tscn")
-
-func take_damage(amount):
-	if !is_invul:
-		hp -= amount
-		update_hp_bar()
-		flash_anim()
-		print(hp)
-		process_invul()
-		if hp <= 0:
-			hp = 0
-			update_hp_bar()
-			audio_hits.stream = critical_sound
-			audio_hits.play()
-			die()
-		else:
-			audio_hits.stream = hit_sound
-			audio_hits.play()
 
 func get_input():
 	input.y = Input.get_action_strength("down") - Input.get_action_strength("up")
@@ -93,31 +105,33 @@ func face_input(p_input):
 		0: 
 			match int(sign(p_input.y)):
 				1: 
-					player_sprite.texture = preload("res://sprites/Player/Player_Front.png")
-					player_sprite.scale.x = 1
+					player_sprite.play("Down")
+					player_sprite.flip_h = false
 				-1: 
-					player_sprite.texture = preload("res://sprites/Player/Player_Back.png")
-					player_sprite.scale.x = 1
+					player_sprite.play("Up")
+					player_sprite.flip_h = false
 		1:
 			match int(sign(p_input.y)):
 				0: 
-					player_sprite.texture = preload("res://sprites/Player/Player_Profile.png")
-					player_sprite.scale.x = 1
+					player_sprite.play("Side")
+					player_sprite.flip_h = false
 				1: 
-					player_sprite.texture = preload("res://sprites/Player/Player_Front.png")
-					player_sprite.scale.x = 1
+					player_sprite.play("Down")
+					player_sprite.flip_h = false
 				-1: 
-					player_sprite.texture = preload("res://sprites/Player/Player_Back.png")
-					player_sprite.scale.x = 1
+					player_sprite.play("Up")
+					player_sprite.flip_h = false
 		-1:
 			match int(sign(p_input.y)):
 				0: 
-					player_sprite.texture =preload("res://sprites/Player/Player_Profile.png")
-					player_sprite.scale.x = -1
+					player_sprite.play("Side")
+					player_sprite.flip_h = true
 				1: 
-					player_sprite.texture = preload("res://sprites/Player/Player_Front.png")
+					player_sprite.play("Down")
+					player_sprite.flip_h = true
 				-1: 
-					player_sprite.texture = preload("res://sprites/Player/Player_Back.png")
+					player_sprite.play("Up")
+					player_sprite.flip_h = true
 
 func pause():
 	get_tree().paused = true
@@ -131,11 +145,13 @@ func dash():
 	audio_steps.stream = dash_sound
 	audio_steps.play()
 	dash_dir = global_position.direction_to(get_global_mouse_position())
-	process_invul(0.29 * dash_power)
+	health_component.process_invul(0.29 * dash_power)
 	flash_anim(Color(1.263, 1.166, 0.288, 1.0), 0.12 * dash_power)
 	await get_tree().create_timer(0.24 *dash_power).timeout
+	if not is_instance_valid(self): return
 	is_dashing = false
 	await get_tree().create_timer(dash_cd).timeout
+	if not is_instance_valid(self): return
 	can_dash = true
 
 func refresh_drops():
@@ -149,18 +165,17 @@ func refresh_drops():
 func _physics_process(delta: float) -> void:
 	var player_input = get_input()
 	face_input(player_input)
-	refresh_drops()
 	
 	# DASHING
 	if is_dashing:
-		velocity = lerp(velocity, dash_dir * speed * 5, accelration * delta)
+		velocity = lerp(velocity, dash_dir * speed * 5, clamp((acceleration * delta), 0.0, 1.0))
 		move_and_slide()
 		return
 	if Input.is_action_just_pressed("dash") && can_dash && drop_count >= 3:
 		dash()
 		can_dash = false
 	# WALKING
-	velocity = lerp(velocity, player_input * speed, accelration * delta)
+	velocity = lerp(velocity, player_input * speed, clamp((acceleration * delta), 0.0, 1.0))
 	move_and_slide()
 	if player_input != Vector2.ZERO && !audio_steps.playing:
 		audio_steps.stream = steps_sound
@@ -189,31 +204,28 @@ func _on_sword_area_entered(area: Area2D) -> void:
 		audio_clashes.play()
 		#Display particles
 		var sparks = clash_particles.instantiate() as CPUParticles2D
-		sparks.one_shot = true
-		sparks.emitting = false
-		sparks.local_coords = false
 		get_parent().add_child(sparks)
 		sparks.global_position = global_position
-		sparks.finished.connect(sparks.queue_free)
-		await get_tree().process_frame
-		sparks.restart()
 
 
 func _on_sword_body_entered(body: Node2D) -> void:
 	if !is_instance_valid(sword_item): return
-	if body.is_in_group("enemies") && !body.is_in_group("boss"):
-		body.take_damage(sword_item.power)
-		drop_count += 1
-	elif body.is_in_group("boss") && !body.attacking || body.is_in_group("boss") && is_dashing:
-		body.take_damage(sword_item.power)
-		drop_count += 1
-	elif body.is_in_group("boss"):
-		drop_count += 1
+	
+	if body.is_in_group("enemies") || body.is_in_group("boss"):
+		if body.has_method("take_damage"):
+			body.take_damage(sword_item.power)
+			#The playr can gain drops by hitting the invulnurable boss for now
+			drop_count += 1
+			refresh_drops()
 
 
 func _on_sword_body_exited(body: Node2D) -> void:
+	#The player can damage the boss while the latter is spininng,
+	#however due to the hitbox usually already being in we need another
+	#way to check for collision. Double damage is avoided thanks to invul
 	if !is_instance_valid(sword_item): return
-	if body.is_in_group("boss"):
-		if !body.attacking || is_dashing:
+	if body.is_in_group("boss") && is_dashing:
+		if body.has_method("take_damage"):
 			body.take_damage(sword_item.power)
 			drop_count += 1
+			refresh_drops()

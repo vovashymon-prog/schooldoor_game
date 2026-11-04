@@ -21,7 +21,7 @@ load_path = "res://.godot/imported/Sword_for_menu.png-e9882d3db33df6259ee5eaed3f
 script = ExtResource("3_eduy1")
 power = 30
 speed = 3.0
-length = 48
+length = 50
 texture = SubResource("CompressedTexture2D_jyrd8")
 metadata/_custom_type_script = "uid://rtfomaj3ijyt"
 
@@ -60,28 +60,18 @@ tile_set = ExtResource("1_jyrd8")
 
 [node name="EnemySpinning" parent="." unique_id=972149547 instance=ExtResource("2_nuwvc")]
 position = Vector2(128, 68)
-circling_distance = 50
-max_hp = 60
 sword_item = SubResource("Resource_wvhnu")
 
 [node name="EnemySpinning2" parent="." unique_id=2146278172 instance=ExtResource("2_nuwvc")]
 modulate = Color(1, 0.654902, 1, 1)
 position = Vector2(125, 124)
 scale = Vector2(2, 2)
-speed = 0.1
-accelration = 10.0
-circling_distance = 200
-max_hp = 300
 sword_item = SubResource("Resource_eduy1")
 
 [node name="EnemySpinning3" parent="." unique_id=944847653 instance=ExtResource("2_nuwvc")]
 position = Vector2(205, 93)
-circling_distance = 50
-max_hp = 60
 sword_item = SubResource("Resource_wvhnu")
 
 [node name="EnemySpinning4" parent="." unique_id=1600735838 instance=ExtResource("2_nuwvc")]
 position = Vector2(46, 84)
-circling_distance = 50
-max_hp = 60
 sword_item = SubResource("Resource_nuwvc")

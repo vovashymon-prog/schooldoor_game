@@ -9,7 +9,7 @@ size = Vector2(32, 20)
 
 [node name="Main" type="Node2D" unique_id=1201342250 groups=["main"]]
 script = ExtResource("1_0bbpv")
-enemy_per_room = [1, 5, 1, 2, 4, 1]
+enemy_per_room = [1, 5, 1, 4, 4, 1]
 
 [node name="Player" parent="." unique_id=972149547 instance=ExtResource("2_rvslj")]
 position = Vector2(128, 154)
