@@ -21,7 +21,7 @@ load_path = "res://.godot/imported/Sword_for_menu.png-e9882d3db33df6259ee5eaed3f
 script = ExtResource("3_eduy1")
 power = 30
 speed = 3.0
-length = 7
+length = 48
 texture = SubResource("CompressedTexture2D_jyrd8")
 metadata/_custom_type_script = "uid://rtfomaj3ijyt"
 
