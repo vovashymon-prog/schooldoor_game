@@ -142,6 +142,7 @@ func pause():
 func dash():
 	is_dashing = true
 	drop_count = 0
+	refresh_drops()
 	audio_steps.stream = dash_sound
 	audio_steps.play()
 	dash_dir = global_position.direction_to(get_global_mouse_position())
@@ -190,22 +191,20 @@ func _process(delta):
 	# SWORD
 	var direction = global_position.direction_to(get_global_mouse_position())
 	var angle = direction.angle()
-	if sword_item: sword.rotation = rotate_toward(sword.rotation, angle, sword_item.speed * delta)
+	if sword_item: sword.rotation = rotate_toward(sword.rotation, angle, sword_item.base_speed * delta)
 
 
 func _on_sword_area_entered(area: Area2D) -> void:
 	if !is_instance_valid(sword_item): return
 	
 	if area.is_in_group("e_weapons"):
-		var enemy = area.get_parent().get_parent()
-		if enemy.is_invertable: enemy.inverted_spinning = not enemy.inverted_spinning
 		#if enemy.max_swing != 0.0 && enemy.max_swing - abs(enemy.sword.rotation) <= PI / 20: enemy.stun_sword(0.34)
 		audio_clashes.stream = clash_sound
 		audio_clashes.play()
 		#Display particles
 		var sparks = clash_particles.instantiate() as CPUParticles2D
 		get_parent().add_child(sparks)
-		sparks.global_position = global_position
+		sparks.global_position = $sword/sword_sprite.global_position
 
 
 func _on_sword_body_entered(body: Node2D) -> void:
@@ -213,7 +212,8 @@ func _on_sword_body_entered(body: Node2D) -> void:
 	
 	if body.is_in_group("enemies") || body.is_in_group("boss"):
 		if body.has_method("take_damage"):
-			body.take_damage(sword_item.power)
+			if !is_dashing: body.take_damage(sword_item.power)
+			else: body.take_damage(sword_item.dashing_power)
 			#The playr can gain drops by hitting the invulnurable boss for now
 			drop_count += 1
 			refresh_drops()
@@ -226,6 +226,6 @@ func _on_sword_body_exited(body: Node2D) -> void:
 	if !is_instance_valid(sword_item): return
 	if body.is_in_group("boss") && is_dashing:
 		if body.has_method("take_damage"):
-			body.take_damage(sword_item.power)
+			body.take_damage(sword_item.dashing_power)
 			drop_count += 1
 			refresh_drops()

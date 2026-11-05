@@ -15,6 +15,8 @@ func _ready():
 	health_changed.emit(hp, max_hp)
 
 func take_damage(amount, duration := 0.33):
+	if is_invul || amount <= 0:
+		return false
 	if !is_invul:
 		hp -= amount
 		process_invul(duration)
@@ -24,6 +26,7 @@ func take_damage(amount, duration := 0.33):
 		else:
 			damaged.emit(amount)
 		health_changed.emit(hp, max_hp)
+		return true
 
 func process_invul(duration := 0.33):
 	is_invul = true

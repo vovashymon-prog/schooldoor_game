@@ -10,7 +10,7 @@ load_path = "res://.godot/imported/Keg.png-166da15f0166b08919623c091e21ffe2.ctex
 [sub_resource type="Resource" id="Resource_wvhnu"]
 script = ExtResource("3_3730o")
 power = 15
-speed = 7.0
+base_speed = 3.142
 texture = SubResource("CompressedTexture2D_nenaj")
 metadata/_custom_type_script = "uid://rtfomaj3ijyt"
 
@@ -42,5 +42,7 @@ tile_set = ExtResource("1_vplxy")
 
 [node name="EnemySpinning" parent="." unique_id=972149547 instance=ExtResource("2_vplxy")]
 position = Vector2(128, 68)
-flanking_mult = 2.0
+speed = 30
+is_invertable = false
+sword_pushable = true
 sword_item = SubResource("Resource_wvhnu")

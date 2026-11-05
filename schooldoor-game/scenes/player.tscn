@@ -80,6 +80,7 @@ corner_detail = 6
 z_index = 99
 collision_mask = 56
 script = ExtResource("1_qhqgy")
+dash_cd = 0.25
 sword_item = ExtResource("2_qlg0r")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=208109745]
@@ -101,7 +102,7 @@ texture = ExtResource("4_tuyoq")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1471116602]
 shape = SubResource("RectangleShape2D_1wlia")
 
-[node name="sword" type="Area2D" parent="." unique_id=1210288509]
+[node name="sword" type="Area2D" parent="." unique_id=1210288509 groups=["p_weapons"]]
 collision_layer = 2
 collision_mask = 12
 

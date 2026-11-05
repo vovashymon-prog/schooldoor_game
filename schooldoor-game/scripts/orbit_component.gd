@@ -13,22 +13,21 @@ var is_active := false:
 		if is_active:
 			face_parent()
 
-var was_activated := false
-var was_deactivated := false
 @onready var orbit : Node2D = $Orbit
 @onready var bobber : Node2D = $Orbit/Bobber
-@onready var player : Player = get_tree().get_first_node_in_group("player")
+var target : Node2D
 
 func _ready() -> void:
 	if is_instance_valid(bobber): 
 		bobber.position.x = orbiting_distance
+	await get_tree().process_frame
 
 func _process(delta: float) -> void:
-	if is_active && is_instance_valid(player) && is_instance_valid(orbit):
-		orbit.global_position = player.global_position
+	if is_active && is_instance_valid(target) && is_instance_valid(orbit):
+		orbit.global_position = target.global_position
 		orbit.rotation += rotation_speed * delta
 
-func get_player_position() -> Vector2:
+func get_target_position() -> Vector2:
 	return bobber.global_position
 
 func multiply_spinning_speed(min_v := -1.0, max_v := -1.0):
@@ -53,9 +52,12 @@ func face_parent():
 
 func activate():
 	if is_active: return
-	if is_instance_valid(player) && is_instance_valid(orbit):
-		orbit.global_position = player.global_position
+	if is_instance_valid(target) && is_instance_valid(orbit):
+		orbit.global_position = target.global_position
 	is_active = true
 
 func deactivate():
 	is_active = false
+
+func set_target(new_target: Node2D):
+	target = new_target

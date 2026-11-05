@@ -79,6 +79,7 @@ func _ready():
 	if is_instance_valid(player): 
 		player.dash_power = 1.15
 		player.connect_enemy(self)
+		orbit_component.set_target(player)
 
 func _physics_process(delta: float) -> void:
 	# WALKING
@@ -93,7 +94,7 @@ func _physics_process(delta: float) -> void:
 		move_and_slide()
 	else:
 		orbit_component.activate()
-		var orbit_direction = (orbit_component.get_player_position() - global_position).normalized()
+		var orbit_direction = (orbit_component.get_target_position() - global_position).normalized()
 		if orbit_direction != null:
 			velocity = velocity.move_toward(orbit_direction * speed * flanking_mult, acceleration * delta * 10)
 			move_and_slide()

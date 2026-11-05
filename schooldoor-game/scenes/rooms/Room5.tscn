@@ -10,7 +10,6 @@ load_path = "res://.godot/imported/Keg.png-166da15f0166b08919623c091e21ffe2.ctex
 [sub_resource type="Resource" id="Resource_wvhnu"]
 script = ExtResource("3_eduy1")
 power = 15
-speed = 7.0
 texture = SubResource("CompressedTexture2D_nenaj")
 metadata/_custom_type_script = "uid://rtfomaj3ijyt"
 
@@ -20,7 +19,6 @@ load_path = "res://.godot/imported/Sword_for_menu.png-e9882d3db33df6259ee5eaed3f
 [sub_resource type="Resource" id="Resource_eduy1"]
 script = ExtResource("3_eduy1")
 power = 30
-speed = 3.0
 length = 50
 texture = SubResource("CompressedTexture2D_jyrd8")
 metadata/_custom_type_script = "uid://rtfomaj3ijyt"
@@ -28,7 +26,6 @@ metadata/_custom_type_script = "uid://rtfomaj3ijyt"
 [sub_resource type="Resource" id="Resource_nuwvc"]
 script = ExtResource("3_eduy1")
 power = 15
-speed = 7.0
 texture = SubResource("CompressedTexture2D_nenaj")
 metadata/_custom_type_script = "uid://rtfomaj3ijyt"
 

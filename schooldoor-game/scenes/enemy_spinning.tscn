@@ -10,13 +10,15 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1wlia"]
 size = Vector2(12, 24)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ddhyt"]
-size = Vector2(16, 4)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l63bq"]
+size = Vector2(16, 2)
 
 [node name="EnemySpinning" type="CharacterBody2D" unique_id=972149547 groups=["enemies"]]
 collision_layer = 4
 collision_mask = 2
 script = ExtResource("1_oyq44")
+speed = 60
+flanking_mult = 1.25
 sword_item = ExtResource("2_aobe2")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2106482395]
@@ -29,21 +31,35 @@ shape = SubResource("RectangleShape2D_1wlia")
 
 [node name="axis" type="Node2D" parent="." unique_id=785008021]
 
-[node name="sword" type="Area2D" parent="axis" unique_id=226408916 groups=["e_weapons"]]
-collision_layer = 8
-collision_mask = 3
-
-[node name="sword_sprite" type="Sprite2D" parent="axis/sword" unique_id=1045923936]
+[node name="sword_sprite" type="Sprite2D" parent="axis" unique_id=1045923936]
 position = Vector2(18, 0)
 texture = ExtResource("4_aobe2")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="axis/sword" unique_id=527752254]
-position = Vector2(18, 0)
-shape = SubResource("RectangleShape2D_ddhyt")
+[node name="SwordRight" type="Area2D" parent="axis" unique_id=226408916 groups=["e_weapons"]]
+collision_layer = 8
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="axis/SwordRight" unique_id=527752254]
+position = Vector2(18, 1)
+shape = SubResource("RectangleShape2D_l63bq")
+
+[node name="SwordLeft" type="Area2D" parent="axis" unique_id=1653778392 groups=["e_weapons"]]
+collision_layer = 8
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="axis/SwordLeft" unique_id=1266223546]
+position = Vector2(18, -1)
+shape = SubResource("RectangleShape2D_l63bq")
 
 [node name="HealthComponent" parent="." unique_id=81352400 instance=ExtResource("5_2ym8s")]
 
 [node name="OrbitComponent" parent="." unique_id=1682502804 instance=ExtResource("6_l63bq")]
 rotation_speed = 2.0
 
-[connection signal="body_entered" from="axis/sword" to="." method="_on_sword_body_entered"]
+[node name="ClashCD" type="Timer" parent="." unique_id=33136462]
+one_shot = true
+
+[connection signal="area_entered" from="axis/SwordRight" to="." method="_on_sword_right_area_entered"]
+[connection signal="body_entered" from="axis/SwordRight" to="." method="_on_sword_body_entered"]
+[connection signal="area_entered" from="axis/SwordLeft" to="." method="_on_sword_left_area_entered"]
+[connection signal="body_entered" from="axis/SwordLeft" to="." method="_on_sword_body_entered"]
