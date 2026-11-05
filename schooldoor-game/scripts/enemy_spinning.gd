@@ -118,8 +118,8 @@ func handle_clash(hit_side: int): #1 = right side, -1 = left_side
 			current_sword_speed *= 4
 		recover_sword_speed()
 	if is_invertable:
-		if hit_side == 1 && inverted_spinning || hit_side == -1 && !inverted_spinning:
-			inverted_spinning = not inverted_spinning
+		#if hit_side == 1 && inverted_spinning || hit_side == -1 && !inverted_spinning:
+		inverted_spinning = not inverted_spinning
 
 func recover_sword_speed():
 	if recovery_tween && recovery_tween.is_running():
