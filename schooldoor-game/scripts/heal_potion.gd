@@ -5,3 +5,4 @@ extends Area2D
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player") && body.has_method("heal"):
 		body.heal(power)
+		queue_free()

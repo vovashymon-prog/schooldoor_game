@@ -4,10 +4,19 @@ extends CharacterBody2D
 @export var speed := 40
 @export var acceleration := 2000.0
 @export var flanking_mult := 2.0
-@export var max_swing := 0.0
+#@export var max_swing := 0.0
 @export var clash_cd := 0.1
 var current_sword_speed : float
 var inverted_spinning := false
+var out_of_swing_zone := false:
+	set(value):
+		if value == out_of_swing_zone:
+			return
+		out_of_swing_zone = value
+		if out_of_swing_zone:
+			inverted_spinning = true
+		else:
+			inverted_spinning = false
 var is_sword_stunned := false
 var turned_recently := false
 @export var is_invertable := true
@@ -22,7 +31,6 @@ var turned_recently := false
 @export var sword_item: Item
 @onready var sprite = $Sprite2D
 @onready var axis = $axis
-#@onready var sword = $axis
 @onready var audio = $Audio
 var player_orbit
 var bobber
@@ -95,8 +103,8 @@ func _ready():
 		if target == null:
 			target = player
 		player.connect_enemy(self)
-		if max_swing != 0.0:
-			axis.look_at(target.global_position)
+		#if max_swing != 0.0:
+			#axis.look_at(target.global_position)
 	if target:
 		orbit_component.set_target(target)
 
@@ -175,21 +183,19 @@ func face_direction(direction):
 func _process(delta):
 	# SWORD
 	if !is_instance_valid(player) || is_sword_stunned: return
-	if max_swing == 0:
-		if !inverted_spinning: axis.rotation += current_sword_speed * delta
-		elif inverted_spinning: axis.rotation -= current_sword_speed * delta
-	else:
-		var playerDir = (player.global_position - global_position)
-		var playerAngle = playerDir.angle()
-		var old_axis_rot = axis.rotation
-		axis.rotation = rotate_toward(axis.rotation, playerAngle, current_sword_speed * delta)
-		var axis_delta = axis.rotation - old_axis_rot
-		axis.rotation -= axis_delta
-		if abs(axis.rotation) >= max_swing + PI / 18: 
-			inverted_spinning = not inverted_spinning
-			axis.rotation = (max_swing - 0.01) * sign(axis.rotation)
-		if !inverted_spinning: axis.rotation -= current_sword_speed * delta
-		else: axis.rotation += current_sword_speed * delta
+	#if max_swing == 0:
+	if !inverted_spinning: axis.rotation += current_sword_speed * delta
+	elif inverted_spinning: axis.rotation -= current_sword_speed * delta
+	#else:
+		#var player_dir = (player.global_position - axis.global_position)
+		#var player_angle = player_dir.angle()
+		#var relative_angle = wrapf(axis.rotation - player_angle, -PI, PI)
+		#if abs(relative_angle) >=  max_swing: 
+			#out_of_swing_zone = true
+		#else:
+			#out_of_swing_zone = false
+		#if inverted_spinning: axis.rotation -= current_sword_speed * delta
+		#else: axis.rotation += current_sword_speed * delta
 
 func _on_sword_body_entered(body: Node2D) -> void:
 	if !is_instance_valid(sword_item): return

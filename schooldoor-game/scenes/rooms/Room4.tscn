@@ -12,7 +12,6 @@ load_path = "res://.godot/imported/ButcherKnife.png-8dd122ed6f5d93ffc897b9e517d2
 [sub_resource type="Resource" id="Resource_vs1ei"]
 script = ExtResource("4_coqgv")
 power = 20
-speed = 5.0
 texture = SubResource("CompressedTexture2D_coqgv")
 metadata/_custom_type_script = "uid://rtfomaj3ijyt"
 
@@ -22,7 +21,6 @@ load_path = "res://.godot/imported/ButcherKnife.png-8dd122ed6f5d93ffc897b9e517d2
 [sub_resource type="Resource" id="Resource_g25s6"]
 script = ExtResource("4_coqgv")
 power = 20
-speed = 5.0
 texture = SubResource("CompressedTexture2D_dwwyj")
 metadata/_custom_type_script = "uid://rtfomaj3ijyt"
 
@@ -48,28 +46,21 @@ tile_map_data = PackedByteArray("AAAOAAUAAAAHAAQAAAAOAAYAAAAHAAUAAAAOAAkAAAAHAAU
 tile_set = ExtResource("1_msc04")
 
 [node name="EnemySpinning2" parent="." unique_id=1705415560 instance=ExtResource("6_vs1ei")]
-position = Vector2(67, 142)
+position = Vector2(73, 128)
 
 [node name="EnemySpinning3" parent="." unique_id=1092351491 instance=ExtResource("6_vs1ei")]
-position = Vector2(183, 159)
+position = Vector2(189, 145)
 
 [node name="EnemyDirected" parent="." unique_id=972149547 instance=ExtResource("3_uup0a")]
 position = Vector2(96, 77)
-speed = 5.0
-circling_speed = 1.4
-circling_distance = 75
-max_swing = 90.0
-is_invertable = true
+speed = 40
+sword_pushable = true
 sword_item = SubResource("Resource_vs1ei")
 
 [node name="EnemyDirected2" parent="." unique_id=794154560 instance=ExtResource("3_uup0a")]
 position = Vector2(170, 73)
-speed = 5.0
-circling_speed = 1.4
-circling_distance = 30
-flanking_mult = 3.0
-max_swing = 90.0
-is_invertable = true
+speed = 40
+sword_pushable = true
 sword_item = SubResource("Resource_g25s6")
 
 [node name="HealPotion" parent="." unique_id=98250702 instance=ExtResource("2_jroud")]
